@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en" x-data>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Color System</title>
+  <link rel="stylesheet" href="/dist/style.css">
+  <!-- Uncomment to test white-label theme -->
+  <!-- <link rel="stylesheet" href="/src/assets/css/themes/acme-theme.css"> -->
+  <style>
+    .color-swatch {
+      width: 100%;
+      height: 80px;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+    }
+    
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.5rem;
+    }
+  </style>
+</head>
+<body class="bg-[color:var(--color-bg-primary)] text-[color:var(--color-text-primary)]" x-data="{ sidebarOpen: true, currentTab: 'semantic' }">
+  
+  <!-- Sidebar -->
+  <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-300 ease-in-out bg-[color:var(--color-sidebar-bg)] border-r border-[color:var(--color-sidebar-border)]" aria-label="Sidebar">
+    <div class="h-full px-3 py-4 overflow-y-auto">
+      <div class="flex items-center justify-between mb-5 px-2">
+        <h2 class="text-xl font-semibold">Color System</h2>
+        <button @click="sidebarOpen = !sidebarOpen" type="button" class="lg:hidden text-[color:var(--color-sidebar-text-muted)] hover:text-[color:var(--color-text-primary)]">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </button>
+      </div>
+      
+      <ul class="space-y-2">
+        <li>
+          <a href="/src/templates/home.html" class="sidebar-item">
+            <svg class="w-5 h-5 text-[color:var(--color-sidebar-text-muted)]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+              <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
+              <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.024-.363.024-.535A8.51 8.51 0 0 0 12.5 0Z"/>
+            </svg>
+            <span class="ml-3">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" class="sidebar-item active">
+            <svg class="w-5 h-5 text-[color:var(--color-sidebar-item-active-text)]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z"/>
+              <path d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z"/>
+              <path d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z"/>
+            </svg>
+            <span class="ml-3">Color System</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="p-4 transition-all duration-300" :class="sidebarOpen ? 'lg:ml-64' : 'lg:ml-0'">
+    <!-- Navbar -->
+    <nav class="bg-[color:var(--color-navbar-bg)] border-b border-[color:var(--color-navbar-border)] px-4 py-2.5 mb-5 flex items-center justify-between">
+      <div class="flex items-center">
+        <button @click="sidebarOpen = !sidebarOpen" type="button" class="inline-flex items-center p-2 text-sm text-[color:var(--color-text-tertiary)] rounded-lg hover:bg-[color:var(--color-bg-tertiary)]">
+          <span class="sr-only">Toggle sidebar</span>
+          <template x-if="sidebarOpen">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+            </svg>
+          </template>
+          <template x-if="!sidebarOpen">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+            </svg>
+          </template>
+        </button>
+        <span class="self-center text-xl font-semibold whitespace-nowrap ml-2">Color System</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- Theme Toggle Button -->
+        <div id="theme-toggle-wrapper">
+          <!-- Include from separate file for better organization -->
+          <!-- This would be a server-side include in a template system -->
+          <iframe src="includes/theme-toggle.html" frameborder="0" scrolling="no" class="w-[75px] h-[40px] overflow-hidden"></iframe>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Color System Content -->
+    <div class="px-2">
+      <div class="mb-8">
+        <h1 class="text-2xl font-semibold mb-2">Color System Documentation</h1>
+        <p class="text-[color:var(--color-text-secondary)]">This page demonstrates the color system and design tokens used throughout the application.</p>
+      </div>
+      
+      <!-- Tab navigation -->
+      <div class="border-b border-[color:var(--color-border)] mb-6">
+        <ul class="flex flex-wrap -mb-px">
+          <li class="mr-2">
+            <button 
+              @click="currentTab = 'semantic'" 
+              :class="currentTab === 'semantic' ? 'border-[color:var(--color-primary)] text-[color:var(--color-primary)]' : 'border-transparent text-[color:var(--color-text-tertiary)] hover:text-[color:var(--color-text-secondary)] hover:border-[color:var(--color-border)]'"
+              class="inline-block p-4 border-b-2 rounded-t-lg"
+            >
+              Semantic Colors
+            </button>
+          </li>
+          <li class="mr-2">
+            <button 
+              @click="currentTab = 'component'" 
+              :class="currentTab === 'component' ? 'border-[color:var(--color-primary)] text-[color:var(--color-primary)]' : 'border-transparent text-[color:var(--color-text-tertiary)] hover:text-[color:var(--color-text-secondary)] hover:border-[color:var(--color-border)]'"
+              class="inline-block p-4 border-b-2 rounded-t-lg"
+            >
+              Component Colors
+            </button>
+          </li>
+          <li class="mr-2">
+            <button 
+              @click="currentTab = 'base'" 
+              :class="currentTab === 'base' ? 'border-[color:var(--color-primary)] text-[color:var(--color-primary)]' : 'border-transparent text-[color:var(--color-text-tertiary)] hover:text-[color:var(--color-text-secondary)] hover:border-[color:var(--color-border)]'"
+              class="inline-block p-4 border-b-2 rounded-t-lg"
+            >
+              Base Colors
+            </button>
+          </li>
+          <li>
+            <button 
+              @click="currentTab = 'ui'" 
+              :class="currentTab === 'ui' ? 'border-[color:var(--color-primary)] text-[color:var(--color-primary)]' : 'border-transparent text-[color:var(--color-text-tertiary)] hover:text-[color:var(--color-text-secondary)] hover:border-[color:var(--color-border)]'"
+              class="inline-block p-4 border-b-2 rounded-t-lg"
+            >
+              UI Components
+            </button>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Semantic Colors Tab -->
+      <div x-show="currentTab === 'semantic'" class="mt-6 card">
+        <div class="card-header">
+          <h2 class="card-title">Semantic Colors</h2>
+          <p class="card-subtitle">Colors that define the meaning and functionality of UI elements.</p>
+        </div>
+        <div class="card-body">
+          <h3 class="text-lg font-medium mb-4">Brand Colors</h3>
+          <div class="color-grid mb-8">
+            <div>
+              <div class="color-swatch bg-[color:var(--color-primary)]"></div>
+              <p class="font-medium">Primary</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-primary</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-primary-hover)]"></div>
+              <p class="font-medium">Primary Hover</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-primary-hover</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-primary-muted)]"></div>
+              <p class="font-medium">Primary Muted</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-primary-muted</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-secondary)]"></div>
+              <p class="font-medium">Secondary</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-secondary</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-accent)]"></div>
+              <p class="font-medium">Accent</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-accent</p>
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-medium mb-4">Background Colors</h3>
+          <div class="color-grid mb-8">
+            <div>
+              <div class="color-swatch bg-[color:var(--color-bg-primary)] border border-[color:var(--color-border)]"></div>
+              <p class="font-medium">Background Primary</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-bg-primary</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-bg-secondary)] border border-[color:var(--color-border)]"></div>
+              <p class="font-medium">Background Secondary</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-bg-secondary</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-bg-tertiary)] border border-[color:var(--color-border)]"></div>
+              <p class="font-medium">Background Tertiary</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-bg-tertiary</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-bg-accent)]"></div>
+              <p class="font-medium">Background Accent</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-bg-accent</p>
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-medium mb-4">Text Colors</h3>
+          <div class="color-grid mb-8">
+            <div>
+              <div class="color-swatch bg-[color:var(--color-text-primary)]"></div>
+              <p class="font-medium">Text Primary</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-text-primary</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-text-secondary)]"></div>
+              <p class="font-medium">Text Secondary</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-text-secondary</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-text-tertiary)]"></div>
+              <p class="font-medium">Text Tertiary</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-text-tertiary</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-text-accent)]"></div>
+              <p class="font-medium">Text Accent</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-text-accent</p>
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-medium mb-4">Feedback Colors</h3>
+          <div class="color-grid">
+            <div>
+              <div class="color-swatch bg-[color:var(--color-success)]"></div>
+              <p class="font-medium">Success</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-success</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-warning)]"></div>
+              <p class="font-medium">Warning</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-warning</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-danger)]"></div>
+              <p class="font-medium">Danger</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-danger</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-info)]"></div>
+              <p class="font-medium">Info</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-info</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-success-muted)]"></div>
+              <p class="font-medium">Success Muted</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-success-muted</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-warning-muted)]"></div>
+              <p class="font-medium">Warning Muted</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-warning-muted</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-danger-muted)]"></div>
+              <p class="font-medium">Danger Muted</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-danger-muted</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-info-muted)]"></div>
+              <p class="font-medium">Info Muted</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-info-muted</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Component Colors Tab -->
+      <div x-show="currentTab === 'component'" class="mt-6 card">
+        <div class="card-header">
+          <h2 class="card-title">Component Colors</h2>
+          <p class="card-subtitle">Colors specific to UI components throughout the application.</p>
+        </div>
+        <div class="card-body">
+          <h3 class="text-lg font-medium mb-4">Sidebar Colors</h3>
+          <div class="color-grid mb-8">
+            <div>
+              <div class="color-swatch bg-[color:var(--color-sidebar-bg)] border border-[color:var(--color-border)]"></div>
+              <p class="font-medium">Sidebar Background</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-sidebar-bg</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-sidebar-item-hover)]"></div>
+              <p class="font-medium">Sidebar Item Hover</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-sidebar-item-hover</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-sidebar-item-active)]"></div>
+              <p class="font-medium">Sidebar Item Active</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-sidebar-item-active</p>
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-medium mb-4">Button Colors</h3>
+          <div class="color-grid mb-8">
+            <div>
+              <div class="color-swatch bg-[color:var(--color-btn-primary-bg)]"></div>
+              <p class="font-medium">Button Primary</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-btn-primary-bg</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-btn-primary-hover-bg)]"></div>
+              <p class="font-medium">Button Primary Hover</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-btn-primary-hover-bg</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-btn-secondary-bg)] border border-[color:var(--color-btn-secondary-border)]"></div>
+              <p class="font-medium">Button Secondary</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-btn-secondary-bg</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-btn-secondary-hover-bg)] border border-[color:var(--color-btn-secondary-hover-border)]"></div>
+              <p class="font-medium">Button Secondary Hover</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-btn-secondary-hover-bg</p>
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-medium mb-4">Card Colors</h3>
+          <div class="color-grid mb-8">
+            <div>
+              <div class="color-swatch bg-[color:var(--color-card-bg)] border border-[color:var(--color-border)]"></div>
+              <p class="font-medium">Card Background</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-card-bg</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-card-border)]"></div>
+              <p class="font-medium">Card Border</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-card-border</p>
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-medium mb-4">Table Colors</h3>
+          <div class="color-grid">
+            <div>
+              <div class="color-swatch bg-[color:var(--color-table-header-bg)]"></div>
+              <p class="font-medium">Table Header</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-table-header-bg</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-table-row-bg)] border border-[color:var(--color-border)]"></div>
+              <p class="font-medium">Table Row</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-table-row-bg</p>
+            </div>
+            <div>
+              <div class="color-swatch bg-[color:var(--color-table-row-hover-bg)]"></div>
+              <p class="font-medium">Table Row Hover</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-table-row-hover-bg</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Base Colors Tab -->
+      <div x-show="currentTab === 'base'" class="mt-6 card">
+        <div class="card-header">
+          <h2 class="card-title">Base Colors</h2>
+          <p class="card-subtitle">Foundational color values that serve as the source for semantic tokens.</p>
+        </div>
+        <div class="card-body">
+          <h3 class="text-lg font-medium mb-4">Gray Scale</h3>
+          <div class="color-grid mb-8">
+            <div>
+              <div class="color-swatch" style="background-color: var(--gray-50)"></div>
+              <p class="font-medium">Gray 50</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--gray-50</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--gray-100)"></div>
+              <p class="font-medium">Gray 100</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--gray-100</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--gray-200)"></div>
+              <p class="font-medium">Gray 200</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--gray-200</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--gray-300)"></div>
+              <p class="font-medium">Gray 300</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--gray-300</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--gray-400)"></div>
+              <p class="font-medium">Gray 400</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--gray-400</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--gray-500)"></div>
+              <p class="font-medium">Gray 500</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--gray-500</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--gray-600)"></div>
+              <p class="font-medium">Gray 600</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--gray-600</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--gray-700)"></div>
+              <p class="font-medium">Gray 700</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)] invert">--gray-700</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--gray-800)"></div>
+              <p class="font-medium">Gray 800</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)] invert">--gray-800</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--gray-900)"></div>
+              <p class="font-medium">Gray 900</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)] invert">--gray-900</p>
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-medium mb-4">Blue Scale</h3>
+          <div class="color-grid mb-8">
+            <div>
+              <div class="color-swatch" style="background-color: var(--blue-50)"></div>
+              <p class="font-medium">Blue 50</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--blue-50</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--blue-100)"></div>
+              <p class="font-medium">Blue 100</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--blue-100</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--blue-300)"></div>
+              <p class="font-medium">Blue 300</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--blue-300</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--blue-500)"></div>
+              <p class="font-medium">Blue 500</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)]">--blue-500</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--blue-600)"></div>
+              <p class="font-medium">Blue 600</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)] invert">--blue-600</p>
+            </div>
+            <div>
+              <div class="color-swatch" style="background-color: var(--blue-700)"></div>
+              <p class="font-medium">Blue 700</p>
+              <p class="text-xs text-[color:var(--color-text-tertiary)] invert">--blue-700</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- UI Components Tab -->
+      <div x-show="currentTab === 'ui'" class="mt-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Buttons Section -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Buttons</h2>
+              <p class="card-subtitle">Button components with different styles and states.</p>
+            </div>
+            <div class="card-body space-y-6">
+              <div>
+                <h3 class="text-lg font-medium mb-3">Primary Buttons</h3>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-primary">Primary Button</button>
+                  <button class="btn btn-primary" disabled>Disabled</button>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="text-lg font-medium mb-3">Secondary Buttons</h3>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-secondary">Secondary Button</button>
+                  <button class="btn btn-secondary" disabled>Disabled</button>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="text-lg font-medium mb-3">Tertiary Buttons</h3>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-tertiary">Tertiary Button</button>
+                  <button class="btn btn-tertiary" disabled>Disabled</button>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="text-lg font-medium mb-3">Contextual Buttons</h3>
+                <div class="flex flex-wrap gap-2">
+                  <button class="btn btn-success">Success</button>
+                  <button class="btn btn-warning">Warning</button>
+                  <button class="btn btn-danger">Danger</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Badges Section -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Badges</h2>
+              <p class="card-subtitle">Status indicators and labels.</p>
+            </div>
+            <div class="card-body space-y-6">
+              <div>
+                <h3 class="text-lg font-medium mb-3">Standard Badges</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="badge badge-primary">Primary</span>
+                  <span class="badge badge-secondary">Secondary</span>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="text-lg font-medium mb-3">Status Badges</h3>
+                <div class="flex flex-wrap gap-2">
+                  <span class="badge badge-success">Success</span>
+                  <span class="badge badge-warning">Warning</span>
+                  <span class="badge badge-danger">Danger</span>
+                  <span class="badge badge-info">Info</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Alerts Section -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Alerts</h2>
+              <p class="card-subtitle">Feedback messages for user actions.</p>
+            </div>
+            <div class="card-body space-y-4">
+              <div class="alert alert-info">
+                <h4 class="font-medium mb-1">Information Alert</h4>
+                <p>This is an informational message for the user.</p>
+              </div>
+              <div class="alert alert-success">
+                <h4 class="font-medium mb-1">Success Alert</h4>
+                <p>Your action was completed successfully!</p>
+              </div>
+              <div class="alert alert-warning">
+                <h4 class="font-medium mb-1">Warning Alert</h4>
+                <p>This action cannot be undone. Please proceed with caution.</p>
+              </div>
+              <div class="alert alert-danger">
+                <h4 class="font-medium mb-1">Error Alert</h4>
+                <p>An error occurred while processing your request.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Forms Section -->
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Form Elements</h2>
+              <p class="card-subtitle">Input controls and form components.</p>
+            </div>
+            <div class="card-body space-y-4">
+              <div>
+                <label for="example-input" class="form-label">Text Input</label>
+                <input type="text" id="example-input" class="form-input" placeholder="Enter text...">
+              </div>
+              <div>
+                <label for="example-select" class="form-label">Select Input</label>
+                <select id="example-select" class="form-input">
+                  <option>Option 1</option>
+                  <option>Option 2</option>
+                  <option>Option 3</option>
+                </select>
+              </div>
+              <div class="flex items-center">
+                <input type="checkbox" id="example-checkbox" class="form-checkbox">
+                <label for="example-checkbox" class="ml-2 text-sm font-medium">Checkbox example</label>
+              </div>
+              <div>
+                <label for="example-disabled" class="form-label">Disabled Input</label>
+                <input type="text" id="example-disabled" class="form-input" disabled value="Disabled input">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="/dist/main.js" defer></script>
+</body>
+</html>
