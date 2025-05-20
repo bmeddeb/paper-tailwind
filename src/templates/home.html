@@ -5,57 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dashboard</title>
   <link rel="stylesheet" href="/dist/style.css">
-  <style>
-    :root {
-      --color-primary: #0f172a;
-      --color-secondary: #1e293b;
-      --color-accent: #3b82f6;
-      --color-text-light: #f8fafc;
-      --spacing-sm: 0.5rem;
-      --spacing-md: 1rem;
-      --spacing-lg: 1.5rem;
-      --font-size-sm: 0.875rem;
-      --font-size-base: 1rem;
-      --font-size-lg: 1.25rem;
-    }
-    
-    /* Ensure dark bg goes all the way to the edges */
-    html.dark, 
-    html.dark body {
-      background-color: #111827 !important; /* --gray-900 */
-    }
-    
-    html.dark .bg-gray-50 {
-      background-color: #111827 !important;
-    }
-    
-    html.dark [style*="background-color"] {
-      background-color: #111827 !important;
-    }
-    
-    .dark-forced {
-      background-color: #111827 !important;
-    }
-    
-    html.dark .main-bg,
-    body.dark-forced .main-bg {
-      background-color: #111827 !important;
-    }
-    
-    @media (prefers-color-scheme: dark) {
-      html.theme-system,
-      html.theme-system body {
-        background-color: #111827 !important;
-      }
-      
-      html.theme-system .bg-gray-50 {
-        background-color: #111827 !important;
-      }
-    }
-  </style>
+
 </head>
 <body class="bg-gray-50 dark:!bg-gray-900 text-gray-800 dark:text-gray-100" x-data="{ sidebarOpen: true }" :class="{'dark-forced': document.documentElement.classList.contains('dark')}" x-init="document.documentElement.classList.contains('dark') && document.body.classList.add('dark-forced')">
-  
+
   <!-- Sidebar -->
   <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-300 ease-in-out bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700" aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800">
@@ -65,7 +18,7 @@
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
         </button>
       </div>
-      
+
       <ul class="space-y-2">
         <!-- Pages Section -->
         <li x-data="{ open: false, ...iconHelper() }">
@@ -93,7 +46,7 @@
             <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Blog</a></li>
           </ul>
         </li>
-        
+
         <!-- Components Section -->
         <li x-data="{ open: false, ...iconHelper() }">
           <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -109,12 +62,12 @@
             <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Modals</a></li>
           </ul>
         </li>
-        
+
         <!-- Forms Section -->
         <li x-data="{ open: false }" x-init="
              const formIcon = window.createIcon('clipboard');
              $el.querySelector('.forms-icon-container').appendChild(formIcon);
-             
+
              const chevron = window.createIcon('chevronDown');
              chevron.classList.add('ml-auto');
              $watch('open', value => {
@@ -139,7 +92,7 @@
             <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Radio</a></li>
           </ul>
         </li>
-        
+
         <!-- Tables Section -->
         <li x-data="{ open: false, ...iconHelper() }">
           <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -155,7 +108,7 @@
             <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Data Table</a></li>
           </ul>
         </li>
-        
+
         <!-- Widgets Section -->
         <li x-data="{ open: false, ...iconHelper() }">
           <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -171,7 +124,7 @@
             <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Progress</a></li>
           </ul>
         </li>
-        
+
         <!-- Charts Section -->
         <li x-data="{ open: false, ...iconHelper() }">
           <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -187,7 +140,7 @@
             <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Pie Chart</a></li>
           </ul>
         </li>
-        
+
         <!-- Calendar Section -->
         <li x-data="{ open: false, ...iconHelper() }">
           <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
@@ -214,11 +167,11 @@
     <!-- Navbar -->
     <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2.5 mb-5 flex items-center justify-between">
       <div class="flex items-center">
-        <button @click="sidebarOpen = !sidebarOpen" 
-                data-drawer-target="default-sidebar" 
-                data-drawer-toggle="default-sidebar" 
-                aria-controls="default-sidebar" 
-                type="button" 
+        <button @click="sidebarOpen = !sidebarOpen"
+                data-drawer-target="default-sidebar"
+                data-drawer-toggle="default-sidebar"
+                aria-controls="default-sidebar"
+                type="button"
                 class="inline-flex items-center p-2 text-sm text-gray-500 dark:text-gray-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600"
                 x-data="iconHelper()">
           <span class="sr-only">Toggle sidebar</span>
@@ -295,7 +248,7 @@
               <span x-show="isTheme('system')">⚙️</span>
             </span>
           </div>
-          
+
           <!-- White Label Theme Selector -->
           <div x-data="themeController" class="relative">
             <button @click="$refs.themesDropdown.classList.toggle('hidden')" class="inline-flex items-center px-3 py-1.5 text-sm border rounded-md hover:bg-gray-50">
@@ -307,14 +260,14 @@
             <div x-ref="themesDropdown" class="absolute right-0 z-10 mt-1 w-40 bg-white dark:bg-gray-800 rounded-md shadow-lg hidden">
               <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
                 <li>
-                  <button @click="setWhiteLabelTheme('acme'); $refs.themesDropdown.classList.add('hidden')" 
+                  <button @click="setWhiteLabelTheme('acme'); $refs.themesDropdown.classList.add('hidden')"
                           class="w-full text-left block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
                           :class="{'bg-gray-100 dark:bg-gray-700': isWhiteLabelTheme('acme')}">
                     ACME (Default)
                   </button>
                 </li>
                 <li>
-                  <button @click="setWhiteLabelTheme('do-not-use'); $refs.themesDropdown.classList.add('hidden')" 
+                  <button @click="setWhiteLabelTheme('do-not-use'); $refs.themesDropdown.classList.add('hidden')"
                           class="w-full text-left block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
                           :class="{'bg-gray-100 dark:bg-gray-700': isWhiteLabelTheme('do-not-use')}">
                     Do Not Use
@@ -323,7 +276,7 @@
             </div>
           </div>
         </div>
-        
+
         <div class="relative" x-data="dropdown()">
           <button @click="toggle()" type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300">
             <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
@@ -346,7 +299,7 @@
     <!-- Dashboard Content -->
     <div class="px-2">
       <h1 class="text-2xl font-semibold mb-6 dark:text-white">Dashboard Overview</h1>
-      
+
       <!-- Stats Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <!-- Total Views Card -->
@@ -361,7 +314,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- New Users Card -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700">
           <div class="flex items-center">
@@ -374,7 +327,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Favorites Card -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700">
           <div class="flex items-center">
@@ -387,7 +340,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Reports Card -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700">
           <div class="flex items-center">
@@ -401,7 +354,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Main Content Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Chart -->
@@ -414,7 +367,7 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Recent Activity -->
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700 overflow-hidden">
           <h2 class="text-lg font-semibold mb-4 dark:text-white">Recent Activity</h2>
@@ -476,7 +429,7 @@
   </div>
 
   <!-- Toast/Notification Component -->
-  <div x-data="notification()" 
+  <div x-data="notification()"
        x-init="setTimeout(() => show('Welcome to the dashboard! Your stats have been updated.', 'success'), 1000)"
        x-show="visible"
        @click="hide()"
@@ -519,14 +472,14 @@
       if (document.documentElement.classList.contains('dark')) {
         forceApplyDarkTheme();
       }
-      
+
       // Create a mutation observer to watch for class changes
       const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
           if (mutation.attributeName === 'class') {
             if (document.documentElement.classList.contains('dark')) {
               forceApplyDarkTheme();
-              
+
               // Update Plotly chart if available
               setTimeout(() => {
                 if (window.Plotly && document.getElementById('main-chart')) {
@@ -539,7 +492,7 @@
               document.querySelectorAll('.main-bg, .bg-gray-50').forEach(el => {
                 el.style.backgroundColor = '';
               });
-              
+
               // Update Plotly chart if available
               setTimeout(() => {
                 if (window.Plotly && document.getElementById('main-chart')) {
@@ -550,10 +503,10 @@
           }
         });
       });
-      
+
       // Start observing
       observer.observe(document.documentElement, { attributes: true });
-      
+
       // Function to force apply dark theme
       function forceApplyDarkTheme() {
         document.body.classList.add('dark-forced');
@@ -563,7 +516,7 @@
         });
         console.log('Dark theme forced via direct script');
       }
-      
+
       // Force check when theme selector is clicked
       document.addEventListener('click', function(e) {
         // Check if the click target is related to theme switching
