@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" x-data>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register</title>
+  <link rel="stylesheet" href="/dist/style.css">
+  <style>
+    :root {
+      --color-primary: #0f172a;
+      --color-secondary: #1e293b;
+      --color-accent: #3b82f6;
+      --color-text-light: #f8fafc;
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --font-size-sm: 0.875rem;
+      --font-size-base: 1rem;
+      --font-size-lg: 1.25rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 flex items-center justify-center min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+  <div class="w-full max-w-md space-y-8 bg-white p-8 rounded-lg shadow-md">
+    <div>
+      <div class="flex justify-center">
+        <!-- Logo -->
+        <a href="/src/templates/home.html" class="text-2xl font-bold text-gray-900">Dashboard</a>
+      </div>
+      <h2 class="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">Create your account</h2>
+      <p class="mt-2 text-center text-sm text-gray-600">
+        Or
+        <!-- TODO: replace with {% url 'login' %} -->
+        <a href="/src/templates/login.html" class="font-medium text-blue-600 hover:text-blue-500">sign in to your account</a>
+      </p>
+    </div>
+    
+    <!-- TODO: replace with {% url 'register_process' %} -->
+    <form class="mt-8 space-y-6" action="#" method="POST">
+      <div class="space-y-4 rounded-md">
+        <!-- Full Name -->
+        <div>
+          <label for="full-name" class="block text-sm font-medium text-gray-700">Full Name</label>
+          <div class="mt-1">
+            <input id="full-name" name="name" type="text" autocomplete="name" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+          </div>
+        </div>
+        
+        <!-- Email Address -->
+        <div>
+          <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
+          <div class="mt-1">
+            <input id="email-address" name="email" type="email" autocomplete="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+          </div>
+        </div>
+        
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <div class="mt-1">
+            <input id="password" name="password" type="password" autocomplete="new-password" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+          </div>
+          <p class="mt-1 text-xs text-gray-500">Must be at least 8 characters, include a number and a special character.</p>
+        </div>
+        
+        <!-- Confirm Password -->
+        <div>
+          <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+          <div class="mt-1">
+            <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Terms and Privacy -->
+      <div class="flex items-start">
+        <div class="flex items-center h-5">
+          <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+        </div>
+        <div class="ml-3 text-sm">
+          <label for="terms" class="font-medium text-gray-700">
+            I agree to the
+            <a href="#" class="text-blue-600 hover:text-blue-500">Terms of Service</a>
+            and
+            <a href="#" class="text-blue-600 hover:text-blue-500">Privacy Policy</a>
+          </label>
+        </div>
+      </div>
+      
+      <!-- Create Account Button -->
+      <div>
+        <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          Create account
+        </button>
+      </div>
+    </form>
+    
+    <!-- Social registration -->
+    <div class="mt-6">
+      <div class="relative">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-gray-300"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-2 bg-white text-gray-500">Or continue with</span>
+        </div>
+      </div>
+      
+      <div class="mt-6 grid grid-cols-2 gap-3">
+        <div>
+          <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0110 4.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.933.359.31.678.92.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C17.14 18.163 20 14.418 20 10c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+        
+        <div>
+          <a href="#" class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.477 0 10c0 5.523 4.477 10 10 10 5.523 0 10-4.477 10-10 0-5.523-4.477-10-10-10zm-1.71 15.467h-3.71v-8.33h3.71v8.33zm-1.855-9.463c-1.003 0-1.815-.812-1.815-1.815 0-1.003.812-1.815 1.815-1.815 1.003 0 1.815.812 1.815 1.815 0 1.003-.812 1.815-1.815 1.815zm9.565 9.463h-3.71v-4.815c0-1.473-.025-3.371-2.051-3.371-2.051 0-2.366 1.606-2.366 3.267v4.919h-3.71v-8.33h3.559v1.632h.051c.526-.998 1.815-2.051 3.736-2.051 3.996 0 4.733 2.629 4.733 6.05v4.699z" clip-rule="evenodd" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="/dist/main.js" defer></script>
+</body>
+</html>

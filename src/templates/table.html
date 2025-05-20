@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en" x-data>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Tables</title>
+  <link rel="stylesheet" href="/dist/style.css">
+</head>
+<body class="bg-gray-50 text-gray-800" x-data="{ sidebarOpen: true }">
+  
+  <!-- Sidebar -->
+  <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-300 ease-in-out bg-white border-r border-gray-200" aria-label="Sidebar">
+    <div class="h-full px-3 py-4 overflow-y-auto bg-white">
+      <div class="flex items-center justify-between mb-5 px-2">
+        <h2 class="text-xl font-semibold">Dashboard</h2>
+        <button @click="sidebarOpen = !sidebarOpen" type="button" class="lg:hidden text-gray-500 hover:text-gray-900">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        </button>
+      </div>
+      
+      <ul class="space-y-2">
+        <!-- Pages Section -->
+        <li x-data="{ open: true }">
+          <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100">
+            <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+              <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
+              <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.024-.363.024-.535A8.51 8.51 0 0 0 12.5 0Z"/>
+            </svg>
+            <span class="ml-3">Pages</span>
+            <svg class="w-3 h-3 ml-auto transform rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" :class="{'rotate-180': open}">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg>
+          </button>
+          <ul x-show="open" class="py-2 space-y-2">
+            <!-- TODO: replace with {% url 'dashboard' %} -->
+            <li><a href="/src/templates/home.html" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Dashboard</a></li>
+            <!-- TODO: replace with {% url 'timeline' %} -->
+            <li><a href="/src/templates/timeline.html" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Timeline</a></li>
+            <li><a href="/src/templates/table.html" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group bg-gray-100">Tables</a></li>
+            <!-- TODO: replace with {% url 'login' %} -->
+            <li><a href="/src/templates/login.html" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Login</a></li>
+            <!-- TODO: replace with {% url 'register' %} -->
+            <li><a href="/src/templates/register.html" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Register</a></li>
+            <!-- TODO: replace with {% url 'profile' %} -->
+            <li><a href="/src/templates/profile.html" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Profile</a></li>
+          </ul>
+        </li>
+        
+        <!-- Tables Section -->
+        <li x-data="{ open: true }">
+          <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100">
+            <svg class="w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M18 7.5h-1v-.5a.5.5 0 0 0-.5-.5H17a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2h.5a.5.5 0 0 0-.5.5V8a.5.5 0 0 0 .5.5H4v7a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-7h.5a.5.5 0 0 0 .5-.5v-.5ZM7.25 3h5.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-5.5a.25.25 0 0 1-.25-.25v-.5a.25.25 0 0 1 .25-.25Z"/>
+            </svg>
+            <span class="ml-3">Tables</span>
+            <svg class="w-3 h-3 ml-auto transform rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6" :class="{'rotate-180': open}">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+            </svg>
+          </button>
+          <ul x-show="open" class="py-2 space-y-2">
+            <li><a href="#basic-table" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Basic Table</a></li>
+            <li><a href="#striped-table" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Striped Table</a></li>
+            <li><a href="#complex-table" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100">Complex Table</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="p-4 transition-all duration-300" :class="sidebarOpen ? 'lg:ml-64' : 'lg:ml-0'">
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-200 px-4 py-2.5 mb-5 flex items-center justify-between">
+      <div class="flex items-center">
+        <button @click="sidebarOpen = !sidebarOpen" data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+          <span class="sr-only">Toggle sidebar</span>
+          <template x-if="sidebarOpen">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+            </svg>
+          </template>
+          <template x-if="!sidebarOpen">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+            </svg>
+          </template>
+        </button>
+        <span class="self-center text-xl font-semibold whitespace-nowrap ml-2">Data Tables</span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300">
+            <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+          </button>
+        </div>
+        <div>
+          <!-- TODO: replace with actual user data -->
+          <p class="text-sm text-gray-900">John Doe</p>
+          <p class="text-xs text-gray-500">Admin</p>
+        </div>
+      </div>
+    </nav>
+    
+    <!-- Table examples -->
+    <div class="space-y-8">
+      <!-- Basic Table -->
+      <div id="basic-table" class="card">
+        <div class="card-header">
+          <h3 class="text-lg font-medium text-gray-900">Basic Table</h3>
+          <p class="mt-1 text-sm text-gray-500">A simple responsive table with basic styling.</p>
+        </div>
+        <div class="card-body overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Position</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10">
+                      <img class="h-10 w-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" alt="User 1">
+                    </div>
+                    <div class="ml-4">
+                      <div class="text-sm font-medium text-gray-900">Jane Cooper</div>
+                      <div class="text-sm text-gray-500">Regional Paradigm Technician</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Admin</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">jane.cooper@example.com</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10">
+                      <img class="h-10 w-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="User 2">
+                    </div>
+                    <div class="ml-4">
+                      <div class="text-sm font-medium text-gray-900">John Smith</div>
+                      <div class="text-sm text-gray-500">Dynamic Division Officer</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Manager</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">john.smith@example.com</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="flex-shrink-0 h-10 w-10">
+                      <img class="h-10 w-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="User 3">
+                    </div>
+                    <div class="ml-4">
+                      <div class="text-sm font-medium text-gray-900">Emma Johnson</div>
+                      <div class="text-sm text-gray-500">Forward Applications Designer</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Developer</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">emma.johnson@example.com</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Striped Table -->
+      <div id="striped-table" class="card">
+        <div class="card-header">
+          <h3 class="text-lg font-medium text-gray-900">Striped Table</h3>
+          <p class="mt-1 text-sm text-gray-500">A table with alternating row colors for better readability.</p>
+        </div>
+        <div class="card-body overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Budget</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr class="bg-white">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Website Redesign</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Acme Inc.</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">In Progress</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">July 15, 2023</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$12,000</td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Mobile App Development</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">XYZ Corp</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Completed</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">June 20, 2023</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$45,000</td>
+              </tr>
+              <tr class="bg-white">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">E-commerce Platform</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">123 Retail</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Planning</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">August 30, 2023</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$75,000</td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">CRM Integration</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">TechStart</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Delayed</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">May 15, 2023</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$18,500</td>
+              </tr>
+              <tr class="bg-white">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">Analytics Dashboard</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">DataViz Ltd</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">In Progress</span>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">July 30, 2023</td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$32,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Complex Table with Sorting and Pagination -->
+      <div id="complex-table" class="card" x-data="{ 
+        currentPage: 1,
+        totalPages: 3,
+        sortField: 'name',
+        sortDirection: 'asc',
+        searchTerm: '',
+        
+        sort(field) {
+          if (this.sortField === field) {
+            this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+          } else {
+            this.sortField = field;
+            this.sortDirection = 'asc';
+          }
+        },
+        
+        nextPage() {
+          if (this.currentPage < this.totalPages) {
+            this.currentPage++;
+          }
+        },
+        
+        prevPage() {
+          if (this.currentPage > 1) {
+            this.currentPage--;
+          }
+        },
+        
+        goToPage(page) {
+          this.currentPage = page;
+        }
+      }">
+        <div class="card-header">
+          <h3 class="text-lg font-medium text-gray-900">Advanced Data Table</h3>
+          <p class="mt-1 text-sm text-gray-500">A complex table with sorting, filtering, and pagination.</p>
+        </div>
+        
+        <!-- Search and filter -->
+        <div class="p-4 bg-white border-b border-gray-200 flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
+          <div class="w-full md:w-1/3">
+            <label for="table-search" class="sr-only">Search</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-5 h-5 text-gray-500" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <input type="text" id="table-search" x-model="searchTerm" class="block p-2 pl-10 text-sm w-full border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Search for items">
+            </div>
+          </div>
+          <div class="flex space-x-2">
+            <button type="button" class="px-3 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300">
+              Export CSV
+            </button>
+            <button type="button" class="px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-200">
+              Filters
+            </button>
+          </div>
+        </div>
+        
+        <div class="card-body overflow-x-auto p-0">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <div class="flex items-center cursor-pointer" @click="sort('name')">
+                    Name
+                    <svg class="w-3 h-3 ml-1.5" :class="{ 'rotate-180': sortDirection === 'desc' && sortField === 'name', 'opacity-0': sortField !== 'name' }" :style="sortField === 'name' ? 'opacity: 1' : ''" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z"/>
+                    </svg>
+                  </div>
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <div class="flex items-center cursor-pointer" @click="sort('role')">
+                    Role
+                    <svg class="w-3 h-3 ml-1.5" :class="{ 'rotate-180': sortDirection === 'desc' && sortField === 'role', 'opacity-0': sortField !== 'role' }" :style="sortField === 'role' ? 'opacity: 1' : ''" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z"/>
+                    </svg>
+                  </div>
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <div class="flex items-center cursor-pointer" @click="sort('department')">
+                    Department
+                    <svg class="w-3 h-3 ml-1.5" :class="{ 'rotate-180': sortDirection === 'desc' && sortField === 'department', 'opacity-0': sortField !== 'department' }" :style="sortField === 'department' ? 'opacity: 1' : ''" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z"/>
+                    </svg>
+                  </div>
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <div class="flex items-center cursor-pointer" @click="sort('status')">
+                    Status
+                    <svg class="w-3 h-3 ml-1.5" :class="{ 'rotate-180': sortDirection === 'desc' && sortField === 'status', 'opacity-0': sortField !== 'status' }" :style="sortField === 'status' ? 'opacity: 1' : ''" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z"/>
+                    </svg>
+                  </div>
+                </th>
+                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <!-- Page 1 content -->
+              <template x-if="currentPage === 1">
+                <template>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" alt="User 1">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">Jane Cooper</div>
+                          <div class="text-sm text-gray-500">jane.cooper@example.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Manager</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Sales</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div class="flex justify-end space-x-2">
+                        <a href="#" class="text-blue-600 hover:text-blue-900">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="User 2">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">John Smith</div>
+                          <div class="text-sm text-gray-500">john.smith@example.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Developer</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Engineering</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div class="flex justify-end space-x-2">
+                        <a href="#" class="text-blue-600 hover:text-blue-900">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="User 3">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">Emma Johnson</div>
+                          <div class="text-sm text-gray-500">emma.johnson@example.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Designer</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Product</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div class="flex justify-end space-x-2">
+                        <a href="#" class="text-blue-600 hover:text-blue-900">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </template>
+              
+              <!-- Page 2 content -->
+              <template x-if="currentPage === 2">
+                <template>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="User 4">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">Michael Brown</div>
+                          <div class="text-sm text-gray-500">michael.brown@example.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Director</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Marketing</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div class="flex justify-end space-x-2">
+                        <a href="#" class="text-blue-600 hover:text-blue-900">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="User 5">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">Sarah Wilson</div>
+                          <div class="text-sm text-gray-500">sarah.wilson@example.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Team Lead</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Engineering</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div class="flex justify-end space-x-2">
+                        <a href="#" class="text-blue-600 hover:text-blue-900">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" alt="User 6">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">Robert Taylor</div>
+                          <div class="text-sm text-gray-500">robert.taylor@example.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Analyst</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Finance</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div class="flex justify-end space-x-2">
+                        <a href="#" class="text-blue-600 hover:text-blue-900">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </template>
+              
+              <!-- Page 3 content -->
+              <template x-if="currentPage === 3">
+                <template>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="User 7">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">David Miller</div>
+                          <div class="text-sm text-gray-500">david.miller@example.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Senior Developer</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Engineering</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div class="flex justify-end space-x-2">
+                        <a href="#" class="text-blue-600 hover:text-blue-900">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                          <img class="h-10 w-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="User 8">
+                        </div>
+                        <div class="ml-4">
+                          <div class="text-sm font-medium text-gray-900">Linda Evans</div>
+                          <div class="text-sm text-gray-500">linda.evans@example.com</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">HR Specialist</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Human Resources</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Inactive</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div class="flex justify-end space-x-2">
+                        <a href="#" class="text-blue-600 hover:text-blue-900">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-900">Delete</a>
+                      </div>
+                    </td>
+                  </tr>
+                </template>
+              </template>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="px-4 py-3 bg-white border-t border-gray-200 sm:px-6">
+          <div class="flex items-center justify-between">
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+              <div>
+                <p class="text-sm text-gray-700">
+                  Showing page <span class="font-medium" x-text="currentPage"></span> of <span class="font-medium" x-text="totalPages"></span>
+                </p>
+              </div>
+              <div>
+                <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+                  <button @click="prevPage()" :disabled="currentPage === 1" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" :class="{ 'opacity-50 cursor-not-allowed': currentPage === 1 }">
+                    <span class="sr-only">Previous</span>
+                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                  <button @click="goToPage(1)" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" :class="{ 'bg-blue-50 text-blue-600': currentPage === 1 }">1</button>
+                  <button @click="goToPage(2)" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" :class="{ 'bg-blue-50 text-blue-600': currentPage === 2 }">2</button>
+                  <button @click="goToPage(3)" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" :class="{ 'bg-blue-50 text-blue-600': currentPage === 3 }">3</button>
+                  <button @click="nextPage()" :disabled="currentPage === totalPages" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" :class="{ 'opacity-50 cursor-not-allowed': currentPage === totalPages }">
+                    <span class="sr-only">Next</span>
+                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </nav>
+              </div>
+            </div>
+            <div class="flex sm:hidden">
+              <button @click="prevPage()" :disabled="currentPage === 1" class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" :class="{ 'opacity-50 cursor-not-allowed': currentPage === 1 }">Previous</button>
+              <div class="px-4 py-2 text-sm text-gray-700">
+                Page <span class="font-medium" x-text="currentPage"></span>
+              </div>
+              <button @click="nextPage()" :disabled="currentPage === totalPages" class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0" :class="{ 'opacity-50 cursor-not-allowed': currentPage === totalPages }">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="/dist/main.js" defer></script>
+</body>
+</html>
