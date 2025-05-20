@@ -6,7 +6,7 @@
 import Alpine from 'alpinejs';
 import { initFlowbite } from 'flowbite';
 import Plotly from 'plotly.js-dist-min';
-import { createIcon, getIconHtml } from './icons.js';
+import heroicons from '../icons/heroicons.js';
 
 // Make libraries available globally
 window.Alpine = Alpine;
@@ -26,41 +26,41 @@ const ThemeUtil = {
     DARK: 'dark',
     SYSTEM: 'system',
   },
-  
+
   // Get user's system preference
   getSystemThemePreference() {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 
-      this.THEMES.DARK : 
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ?
+      this.THEMES.DARK :
       this.THEMES.LIGHT;
   },
-  
+
   // Get saved theme from local storage or default to system
   getSavedTheme() {
     return localStorage.getItem('theme') || this.THEMES.SYSTEM;
   },
-  
+
   // Save theme to local storage
   saveTheme(theme) {
     localStorage.setItem('theme', theme);
   },
-  
+
   // Apply theme to document
   applyTheme(theme) {
     // Remove existing theme classes
     document.documentElement.classList.remove('light', 'dark', 'theme-system');
     document.body.classList.remove('dark', 'dark-forced');
-    
+
     if (theme === this.THEMES.SYSTEM) {
       // Add system theme class and apply current system preference
       document.documentElement.classList.add('theme-system');
-      
+
       // Apply appropriate theme based on system preference
       const systemTheme = this.getSystemThemePreference();
       document.documentElement.classList.add(systemTheme);
-      
+
       // Debug log
       console.log('System preference theme applied:', systemTheme);
-      
+
       // Force body class for better CSS specificity
       if (systemTheme === 'dark') {
         document.body.classList.add('dark', 'dark-forced');
@@ -68,16 +68,16 @@ const ThemeUtil = {
     } else {
       // Apply specific theme
       document.documentElement.classList.add(theme);
-      
+
       // Debug log
       console.log('Theme applied:', theme);
-      
+
       // Force body class for better CSS specificity
       if (theme === 'dark') {
         document.body.classList.add('dark', 'dark-forced');
       }
     }
-    
+
     // Force refresh of background colors
     if (document.documentElement.classList.contains('dark')) {
       document.querySelectorAll('.main-bg, .bg-gray-50').forEach(el => {
@@ -91,34 +91,34 @@ const ThemeUtil = {
       });
       document.body.style.backgroundColor = '';
     }
-    
+
     console.log('Dark mode state:', document.documentElement.classList.contains('dark'));
   },
-  
+
   // Get white-label theme from URL parameter or localStorage, defaults to 'acme'
   getWhiteLabelTheme() {
     // First check URL parameter
     const urlParams = new URLSearchParams(window.location.search);
     const themeParam = urlParams.get('theme');
-    
+
     // If URL parameter exists, save it and return it
     if (themeParam) {
       localStorage.setItem('white-label-theme', themeParam);
       return themeParam;
     }
-    
+
     // Otherwise check localStorage
     const storedTheme = localStorage.getItem('white-label-theme');
-    
+
     // If there's no stored theme, set and return the default 'acme' theme
     if (!storedTheme) {
       localStorage.setItem('white-label-theme', 'acme');
       return 'acme';
     }
-    
+
     return storedTheme;
   },
-  
+
   // Apply white-label theme by loading CSS
   applyWhiteLabelTheme(themeName) {
     // Remove any existing white-label theme
@@ -126,13 +126,13 @@ const ThemeUtil = {
     if (existingTheme) {
       existingTheme.remove();
     }
-    
+
     // Default to 'acme' theme if none specified
     if (!themeName) {
       themeName = 'acme';
       localStorage.setItem('white-label-theme', 'acme');
     }
-    
+
     // Add the new theme stylesheet
     const themeLink = document.createElement('link');
     themeLink.rel = 'stylesheet';
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Apply light/dark theme
   const savedTheme = ThemeUtil.getSavedTheme();
   ThemeUtil.applyTheme(savedTheme);
-  
+
   // Apply white-label theme if specified in URL or localStorage
   const whiteLabelTheme = ThemeUtil.getWhiteLabelTheme();
   if (whiteLabelTheme) {
@@ -159,12 +159,12 @@ document.addEventListener('DOMContentLoaded', () => {
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
   if (ThemeUtil.getSavedTheme() === ThemeUtil.THEMES.SYSTEM) {
     ThemeUtil.applyTheme(ThemeUtil.THEMES.SYSTEM);
-    
+
     // Update charts when system preference changes
     setTimeout(() => {
       if (window.Plotly && document.getElementById('main-chart')) {
         const isDark = document.documentElement.classList.contains('dark');
-        togglePlotlyTheme(document.getElementById('main-chart'), 
+        togglePlotlyTheme(document.getElementById('main-chart'),
           isDark ? 'plotly_dark' : 'plotly_white');
       }
     }, 100);
@@ -186,78 +186,69 @@ window.togglePlotlyTheme = function(chartElement, themeTemplate) {
 
 // Custom Alpine.js components
 document.addEventListener('alpine:init', () => {
-  // Icon helper component
-  Alpine.data('iconHelper', () => ({
-    getIcon(name, additionalClasses = '') {
-      if (window.heroicons && window.heroicons[name]) {
-        let icon = window.heroicons[name];
-        if (additionalClasses) {
-          // Add additional classes to the SVG element
-          const wrapper = document.createElement('div');
-          wrapper.innerHTML = icon;
-          const svg = wrapper.querySelector('svg');
-          additionalClasses.split(' ').forEach(cls => {
-            if (cls) svg.classList.add(cls);
-          });
-          icon = wrapper.innerHTML;
-        }
-        return icon;
-      }
-      return '';
-    }
-  }));
-  
+  // Magic helper for inserting SVG icons
+  Alpine.magic('icon', () => (name, classes = '') => {
+    const svgString = heroicons[name];
+    if (!svgString) return '';
+    if (!classes) return svgString;
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = svgString;
+    const svg = wrapper.firstElementChild;
+    svg.classList.add(...classes.split(' '));
+    return wrapper.innerHTML;
+  });
+
   // Theme controller component
   Alpine.data('themeController', () => ({
     currentTheme: ThemeUtil.getSavedTheme(),
     whiteLabelTheme: ThemeUtil.getWhiteLabelTheme() || 'default',
-    
+
     init() {
       this.$watch('currentTheme', (value) => {
         ThemeUtil.saveTheme(value);
         ThemeUtil.applyTheme(value);
-        
+
         // Update Plotly charts with the new theme
         setTimeout(() => {
           if (window.Plotly && document.getElementById('main-chart')) {
             const isDark = document.documentElement.classList.contains('dark');
-            togglePlotlyTheme(document.getElementById('main-chart'), 
+            togglePlotlyTheme(document.getElementById('main-chart'),
               isDark ? 'plotly_dark' : 'plotly_white');
           }
         }, 100);
       });
-      
+
       this.$watch('whiteLabelTheme', (value) => {
         ThemeUtil.applyWhiteLabelTheme(value);
       });
     },
-    
+
     // Toggle between light and dark (preserves system setting)
     toggleLightDark() {
       if (this.currentTheme === ThemeUtil.THEMES.SYSTEM) {
         // If set to system, switch to explicit light/dark based on current appearance
-        this.currentTheme = ThemeUtil.getSystemThemePreference() === ThemeUtil.THEMES.DARK 
-          ? ThemeUtil.THEMES.LIGHT 
+        this.currentTheme = ThemeUtil.getSystemThemePreference() === ThemeUtil.THEMES.DARK
+          ? ThemeUtil.THEMES.LIGHT
           : ThemeUtil.THEMES.DARK;
       } else {
         // Toggle between light and dark
-        this.currentTheme = this.currentTheme === ThemeUtil.THEMES.DARK 
-          ? ThemeUtil.THEMES.LIGHT 
+        this.currentTheme = this.currentTheme === ThemeUtil.THEMES.DARK
+          ? ThemeUtil.THEMES.LIGHT
           : ThemeUtil.THEMES.DARK;
       }
     },
-    
+
     // Set a specific theme
     setTheme(theme) {
       if (Object.values(ThemeUtil.THEMES).includes(theme)) {
         this.currentTheme = theme;
       }
     },
-    
+
     // Set a white-label theme
     setWhiteLabelTheme(theme) {
       this.whiteLabelTheme = theme;
-      
+
       // Update URL with theme parameter without reloading the page
       const url = new URL(window.location);
       if (theme && theme !== 'default') {
@@ -267,26 +258,26 @@ document.addEventListener('alpine:init', () => {
       }
       window.history.pushState({}, '', url);
     },
-    
+
     // Check if specific theme is active
     isTheme(theme) {
       if (theme === ThemeUtil.THEMES.SYSTEM) {
         return this.currentTheme === ThemeUtil.THEMES.SYSTEM;
       }
-      
+
       if (this.currentTheme === ThemeUtil.THEMES.SYSTEM) {
         return ThemeUtil.getSystemThemePreference() === theme;
       }
-      
+
       return this.currentTheme === theme;
     },
-    
+
     // Check if specific white-label theme is active
     isWhiteLabelTheme(theme) {
       return this.whiteLabelTheme === theme;
     }
   }));
-  
+
   // Dropdown component
   Alpine.data('dropdown', () => ({
     open: false,
@@ -297,7 +288,7 @@ document.addEventListener('alpine:init', () => {
       this.open = false;
     }
   }));
-  
+
   // Modal component
   Alpine.data('modal', () => ({
     visible: false,
@@ -310,7 +301,7 @@ document.addEventListener('alpine:init', () => {
       document.body.classList.remove('overflow-hidden');
     }
   }));
-  
+
   // Tabs component
   Alpine.data('tabs', () => ({
     activeTab: 0,
@@ -318,28 +309,28 @@ document.addEventListener('alpine:init', () => {
       this.activeTab = index;
     }
   }));
-  
+
   // Toast/notification component
   Alpine.data('notification', () => ({
     visible: false,
     message: '',
     type: 'info', // 'info', 'success', 'warning', 'error'
     timeout: null,
-    
+
     show(message, type = 'info', duration = 3000) {
       this.visible = true;
       this.message = message;
       this.type = type;
-      
+
       if (this.timeout) {
         clearTimeout(this.timeout);
       }
-      
+
       this.timeout = setTimeout(() => {
         this.hide();
       }, duration);
     },
-    
+
     hide() {
       this.visible = false;
     }
@@ -359,14 +350,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const getCssVariable = (variableName) => {
       return getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
     };
-    
+
     // Function to create and update chart with current theme colors
     const createChart = () => {
       const isDark = document.documentElement.classList.contains('dark');
       const primaryColor = getCssVariable('--color-primary') || '#3b82f6';
-      
+
       console.log('Chart theme applied:', isDark ? 'dark' : 'light');
-      
+
       // Create the data
       const data = [{
         x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
@@ -376,14 +367,14 @@ document.addEventListener('DOMContentLoaded', () => {
         marker: {color: primaryColor},
         line: {color: primaryColor}
       }];
-      
+
       // Set layout options based on theme
       const layout = {
         autosize: true,
         margin: {l: 40, r: 20, t: 10, b: 40},
         template: isDark ? 'plotly_dark' : 'plotly_white'
       };
-      
+
       // Additional custom theme settings
       if (isDark) {
         layout.paper_bgcolor = '#1f2937'; // gray-800
@@ -392,14 +383,14 @@ document.addEventListener('DOMContentLoaded', () => {
         layout.paper_bgcolor = 'rgba(255,255,255,0)';
         layout.plot_bgcolor = 'rgba(255,255,255,0)';
       }
-      
+
       const config = {
         responsive: true,
         displayModeBar: false,
         scrollZoom: false,
         staticPlot: false
       };
-      
+
       // If chart already exists, update it
       if (document.getElementById('main-chart') && document.getElementById('main-chart').data) {
         Plotly.react('main-chart', data, layout, config);
@@ -408,29 +399,29 @@ document.addEventListener('DOMContentLoaded', () => {
         Plotly.newPlot('main-chart', data, layout, config);
       }
     };
-    
+
     // Create chart initially
     createChart();
-    
+
     // Update chart when theme changes
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class' && 
-            (mutation.target.classList.contains('dark') || 
+        if (mutation.attributeName === 'class' &&
+            (mutation.target.classList.contains('dark') ||
              mutation.target.classList.contains('light'))) {
           createChart();
         }
       });
     });
-    
+
     // Watch for changes in the document's classes (dark/light mode toggle)
     observer.observe(document.documentElement, { attributes: true });
-    
+
     // Watch for theme stylesheet changes
     const linkObserver = new MutationObserver(() => {
       setTimeout(createChart, 100); // Small delay to ensure CSS has loaded
     });
-    
+
     linkObserver.observe(document.head, { childList: true, subtree: false });
   }
 });
