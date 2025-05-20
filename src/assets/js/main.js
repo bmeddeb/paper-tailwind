@@ -6,6 +6,7 @@
 import Alpine from 'alpinejs';
 import { initFlowbite } from 'flowbite';
 import Plotly from 'plotly.js-dist-min';
+import { createIcon, getIconHtml } from './icons.js';
 
 // Make libraries available globally
 window.Alpine = Alpine;
@@ -94,7 +95,7 @@ const ThemeUtil = {
     console.log('Dark mode state:', document.documentElement.classList.contains('dark'));
   },
   
-  // Get white-label theme from URL parameter or localStorage
+  // Get white-label theme from URL parameter or localStorage, defaults to 'acme'
   getWhiteLabelTheme() {
     // First check URL parameter
     const urlParams = new URLSearchParams(window.location.search);
@@ -107,7 +108,15 @@ const ThemeUtil = {
     }
     
     // Otherwise check localStorage
-    return localStorage.getItem('white-label-theme');
+    const storedTheme = localStorage.getItem('white-label-theme');
+    
+    // If there's no stored theme, set and return the default 'acme' theme
+    if (!storedTheme) {
+      localStorage.setItem('white-label-theme', 'acme');
+      return 'acme';
+    }
+    
+    return storedTheme;
   },
   
   // Apply white-label theme by loading CSS
@@ -118,10 +127,10 @@ const ThemeUtil = {
       existingTheme.remove();
     }
     
-    // If no theme name provided or 'default', don't add a new stylesheet
-    if (!themeName || themeName === 'default') {
-      localStorage.removeItem('white-label-theme');
-      return;
+    // Default to 'acme' theme if none specified
+    if (!themeName) {
+      themeName = 'acme';
+      localStorage.setItem('white-label-theme', 'acme');
     }
     
     // Add the new theme stylesheet
@@ -177,6 +186,27 @@ window.togglePlotlyTheme = function(chartElement, themeTemplate) {
 
 // Custom Alpine.js components
 document.addEventListener('alpine:init', () => {
+  // Icon helper component
+  Alpine.data('iconHelper', () => ({
+    getIcon(name, additionalClasses = '') {
+      if (window.heroicons && window.heroicons[name]) {
+        let icon = window.heroicons[name];
+        if (additionalClasses) {
+          // Add additional classes to the SVG element
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = icon;
+          const svg = wrapper.querySelector('svg');
+          additionalClasses.split(' ').forEach(cls => {
+            if (cls) svg.classList.add(cls);
+          });
+          icon = wrapper.innerHTML;
+        }
+        return icon;
+      }
+      return '';
+    }
+  }));
+  
   // Theme controller component
   Alpine.data('themeController', () => ({
     currentTheme: ThemeUtil.getSavedTheme(),

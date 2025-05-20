@@ -14,7 +14,7 @@
       border-radius: 6px;
       margin-bottom: 0.5rem;
     }
-    
+
     .color-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -23,7 +23,7 @@
   </style>
 </head>
 <body class="bg-[color:var(--color-bg-primary)] text-[color:var(--color-text-primary)]" x-data="{ sidebarOpen: true, currentTab: 'semantic' }">
-  
+
   <!-- Sidebar -->
   <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-300 ease-in-out bg-[color:var(--color-sidebar-bg)] border-r border-[color:var(--color-sidebar-border)]" aria-label="Sidebar">
     <div class="h-full px-3 py-4 overflow-y-auto">
@@ -33,7 +33,7 @@
           <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
         </button>
       </div>
-      
+
       <ul class="space-y-2">
         <li>
           <a href="/src/templates/home.html" class="sidebar-item">
@@ -95,13 +95,13 @@
         <h1 class="text-2xl font-semibold mb-2">Color System Documentation</h1>
         <p class="text-[color:var(--color-text-secondary)]">This page demonstrates the color system and design tokens used throughout the application.</p>
       </div>
-      
+
       <!-- Tab navigation -->
       <div class="border-b border-[color:var(--color-border)] mb-6">
         <ul class="flex flex-wrap -mb-px">
           <li class="mr-2">
-            <button 
-              @click="currentTab = 'semantic'" 
+            <button
+              @click="currentTab = 'semantic'"
               :class="currentTab === 'semantic' ? 'border-[color:var(--color-primary)] text-[color:var(--color-primary)]' : 'border-transparent text-[color:var(--color-text-tertiary)] hover:text-[color:var(--color-text-secondary)] hover:border-[color:var(--color-border)]'"
               class="inline-block p-4 border-b-2 rounded-t-lg"
             >
@@ -109,8 +109,8 @@
             </button>
           </li>
           <li class="mr-2">
-            <button 
-              @click="currentTab = 'component'" 
+            <button
+              @click="currentTab = 'component'"
               :class="currentTab === 'component' ? 'border-[color:var(--color-primary)] text-[color:var(--color-primary)]' : 'border-transparent text-[color:var(--color-text-tertiary)] hover:text-[color:var(--color-text-secondary)] hover:border-[color:var(--color-border)]'"
               class="inline-block p-4 border-b-2 rounded-t-lg"
             >
@@ -118,8 +118,8 @@
             </button>
           </li>
           <li class="mr-2">
-            <button 
-              @click="currentTab = 'base'" 
+            <button
+              @click="currentTab = 'base'"
               :class="currentTab === 'base' ? 'border-[color:var(--color-primary)] text-[color:var(--color-primary)]' : 'border-transparent text-[color:var(--color-text-tertiary)] hover:text-[color:var(--color-text-secondary)] hover:border-[color:var(--color-border)]'"
               class="inline-block p-4 border-b-2 rounded-t-lg"
             >
@@ -127,8 +127,8 @@
             </button>
           </li>
           <li>
-            <button 
-              @click="currentTab = 'ui'" 
+            <button
+              @click="currentTab = 'ui'"
               :class="currentTab === 'ui' ? 'border-[color:var(--color-primary)] text-[color:var(--color-primary)]' : 'border-transparent text-[color:var(--color-text-tertiary)] hover:text-[color:var(--color-text-secondary)] hover:border-[color:var(--color-border)]'"
               class="inline-block p-4 border-b-2 rounded-t-lg"
             >
@@ -137,7 +137,7 @@
           </li>
         </ul>
       </div>
-      
+
       <!-- Semantic Colors Tab -->
       <div x-show="currentTab === 'semantic'" class="mt-6 card">
         <div class="card-header">
@@ -173,7 +173,7 @@
               <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-accent</p>
             </div>
           </div>
-          
+
           <h3 class="text-lg font-medium mb-4">Background Colors</h3>
           <div class="color-grid mb-8">
             <div>
@@ -197,7 +197,7 @@
               <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-bg-accent</p>
             </div>
           </div>
-          
+
           <h3 class="text-lg font-medium mb-4">Text Colors</h3>
           <div class="color-grid mb-8">
             <div>
@@ -221,7 +221,7 @@
               <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-text-accent</p>
             </div>
           </div>
-          
+
           <h3 class="text-lg font-medium mb-4">Feedback Colors</h3>
           <div class="color-grid">
             <div>
@@ -267,7 +267,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Component Colors Tab -->
       <div x-show="currentTab === 'component'" class="mt-6 card">
         <div class="card-header">
@@ -293,7 +293,7 @@
               <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-sidebar-item-active</p>
             </div>
           </div>
-          
+
           <h3 class="text-lg font-medium mb-4">Button Colors</h3>
           <div class="color-grid mb-8">
             <div>
@@ -317,7 +317,7 @@
               <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-btn-secondary-hover-bg</p>
             </div>
           </div>
-          
+
           <h3 class="text-lg font-medium mb-4">Card Colors</h3>
           <div class="color-grid mb-8">
             <div>
@@ -331,7 +331,7 @@
               <p class="text-xs text-[color:var(--color-text-tertiary)]">--color-card-border</p>
             </div>
           </div>
-          
+
           <h3 class="text-lg font-medium mb-4">Table Colors</h3>
           <div class="color-grid">
             <div>
@@ -352,7 +352,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- Base Colors Tab -->
       <div x-show="currentTab === 'base'" class="mt-6 card">
         <div class="card-header">
@@ -413,7 +413,7 @@
               <p class="text-xs text-[color:var(--color-text-tertiary)] invert">--gray-900</p>
             </div>
           </div>
-          
+
           <h3 class="text-lg font-medium mb-4">Blue Scale</h3>
           <div class="color-grid mb-8">
             <div>
@@ -449,7 +449,7 @@
           </div>
         </div>
       </div>
-      
+
       <!-- UI Components Tab -->
       <div x-show="currentTab === 'ui'" class="mt-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -467,7 +467,7 @@
                   <button class="btn btn-primary" disabled>Disabled</button>
                 </div>
               </div>
-              
+
               <div>
                 <h3 class="text-lg font-medium mb-3">Secondary Buttons</h3>
                 <div class="flex flex-wrap gap-2">
@@ -475,7 +475,7 @@
                   <button class="btn btn-secondary" disabled>Disabled</button>
                 </div>
               </div>
-              
+
               <div>
                 <h3 class="text-lg font-medium mb-3">Tertiary Buttons</h3>
                 <div class="flex flex-wrap gap-2">
@@ -483,7 +483,7 @@
                   <button class="btn btn-tertiary" disabled>Disabled</button>
                 </div>
               </div>
-              
+
               <div>
                 <h3 class="text-lg font-medium mb-3">Contextual Buttons</h3>
                 <div class="flex flex-wrap gap-2">
@@ -494,7 +494,7 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Badges Section -->
           <div class="card">
             <div class="card-header">
@@ -509,7 +509,7 @@
                   <span class="badge badge-secondary">Secondary</span>
                 </div>
               </div>
-              
+
               <div>
                 <h3 class="text-lg font-medium mb-3">Status Badges</h3>
                 <div class="flex flex-wrap gap-2">
@@ -521,7 +521,7 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Alerts Section -->
           <div class="card">
             <div class="card-header">
@@ -547,7 +547,7 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Forms Section -->
           <div class="card">
             <div class="card-header">
@@ -581,7 +581,7 @@
       </div>
     </div>
   </div>
-  
+
   <script src="/dist/main.js" defer></script>
 </body>
 </html>

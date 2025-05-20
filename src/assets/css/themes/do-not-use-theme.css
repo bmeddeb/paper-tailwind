@@ -1,0 +1,93 @@
+/**
+ * Do Not Use Theme
+ * This is a legacy theme kept for reference only
+ */
+
+:root {
+  /* Brand Colors - Primary Palette */
+  --brand-primary: #0057b8;     /* Your primary brand color */
+  --brand-secondary: #0076cc;   /* Your secondary brand color */
+  --brand-accent: #64d2ff;      /* Your accent color */
+  
+  /* Map brand colors to semantic colors */
+  --color-primary: var(--brand-primary);
+  --color-primary-hover: #003d82; /* Darker version */
+  --color-primary-active: #002d61; /* Even darker */
+  --color-primary-muted: #e6f0fa; /* Very light */
+  
+  --color-secondary: var(--brand-secondary);
+  --color-secondary-hover: #005c9e;
+  --color-secondary-active: #004375;
+  --color-secondary-muted: #e6f3ff;
+  
+  --color-accent: var(--brand-accent);
+  --color-accent-hover: #41c0f7;
+  --color-accent-active: #1eb3f5;
+  --color-accent-muted: #ebf9ff;
+  
+  /* Feedback colors - Custom for your brand */
+  --color-success: #00a651;
+  --color-success-hover: #008943;
+  --color-success-muted: #e6f8ef;
+  
+  --color-warning: #ffa300;
+  --color-warning-hover: #e68a00;
+  --color-warning-muted: #fff8e6;
+  
+  --color-danger: #e60000;
+  --color-danger-hover: #cc0000;
+  --color-danger-muted: #ffe6e6;
+  
+  --color-info: #0088cc;
+  --color-info-hover: #0071a8;
+  --color-info-muted: #e6f4fa;
+  
+  /* Logo colors */
+  --brand-logo-primary: var(--brand-primary);
+  --brand-logo-secondary: var(--brand-secondary);
+}
+
+/* Dark theme overrides */
+.dark {
+  /* Brand Colors - Primary Palette (Dark Mode) */
+  --brand-primary: #1a86ed; /* Lighter in dark mode */
+  --brand-secondary: #4dabff;
+  --brand-accent: #90dfff;
+  
+  /* Map brand colors to semantic colors */
+  --color-primary: var(--brand-primary);
+  --color-primary-hover: #3a97f0; /* Lighter for hover in dark mode */
+  --color-primary-active: #5aa7f2;
+  --color-primary-muted: #0a3b69; /* Dark muted blue */
+  
+  --color-secondary: var(--brand-secondary);
+  --color-secondary-hover: #6dbbff;
+  --color-secondary-active: #8dcaff;
+  --color-secondary-muted: #0a4475;
+  
+  --color-accent: var(--brand-accent);
+  --color-accent-hover: #acecff;
+  --color-accent-active: #c8f4ff;
+  --color-accent-muted: #0b5675;
+  
+  /* Feedback colors - Custom for your brand (Dark Mode) */
+  --color-success: #26c281;
+  --color-success-hover: #2ecc71;
+  --color-success-muted: #0a4b35;
+  
+  --color-warning: #ffb74d;
+  --color-warning-hover: #ffc166;
+  --color-warning-muted: #664b1f;
+  
+  --color-danger: #ff5252;
+  --color-danger-hover: #ff6666;
+  --color-danger-muted: #661a1a;
+  
+  --color-info: #29b6f6;
+  --color-info-hover: #4dc4f7;
+  --color-info-muted: #0a4b66;
+  
+  /* Logo colors */
+  --brand-logo-primary: var(--brand-primary);
+  --brand-logo-secondary: var(--brand-secondary);
+}

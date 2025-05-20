@@ -21,6 +21,7 @@
     "tailwindcss": "^3.3.3"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.2.0",
     "alpinejs": "^3.14.9",
     "plotly.js-dist-min": "^3.0.1"
   }

@@ -20,6 +20,19 @@
     line-height: var(--line-height-normal);
   }
   
+  /* Icon styling */
+  .icon {
+    @apply w-5 h-5 text-gray-500 dark:text-gray-400 transition duration-75 group-hover:text-gray-900 dark:group-hover:text-white;
+  }
+  
+  .icon-sm {
+    @apply w-3 h-3;
+  }
+  
+  .card-icon {
+    @apply w-6 h-6;
+  }
+  
   /* Default dark mode toggle based on system preference */
   @media (prefers-color-scheme: dark) {
     html.theme-system {
