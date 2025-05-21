@@ -90,7 +90,7 @@ module.exports = {
         },
         card: {
           bg: 'var(--color-card-bg)',
-          border: 'var(--color-card-border)', 
+          border: 'var(--color-card-border)',
           title: 'var(--color-card-title)',
           text: 'var(--color-card-text)',
         },
@@ -182,6 +182,16 @@ module.exports = {
         'ease-out': 'var(--transition-ease-out)',
         'ease-in-out': 'var(--transition-ease-in-out)',
       },
+
+      accentColor: theme => ({
+        primary: theme('colors.primary.DEFAULT'),
+        secondary: theme('colors.secondary.DEFAULT'),
+        accent: theme('colors.accent.DEFAULT'),
+        success: theme('colors.success.DEFAULT'),
+        warning: theme('colors.warning.DEFAULT'),
+        danger: theme('colors.danger.DEFAULT'),
+        info: theme('colors.info.DEFAULT'),
+      }),
     },
   },
   plugins: [
