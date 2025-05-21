@@ -16,7 +16,15 @@
   - Dark/light mode support
   - White label theme selector
 -->
-<html lang="en" x-data="themeController()" :class="{ 'dark': isTheme('dark') }" x-init="initTheme()">
+<html lang="en" 
+      x-data="{ 
+        ...themeController(),
+        sidebarOpen: window.innerWidth >= 640, 
+        sidebarCollapsed: window.innerWidth < 1024
+      }" 
+      :class="{ 'dark': isTheme('dark') }" 
+      x-init="initTheme()"
+      @resize.window="sidebarOpen = window.innerWidth >= 640; sidebarCollapsed = window.innerWidth < 1024">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,7 +34,7 @@
   <link rel="stylesheet" href="/dist/style.css">
   <!-- Add any additional page-specific styles or scripts here -->
 </head>
-<body x-data="{ sidebarOpen: window.innerWidth >= 640, sidebarCollapsed: window.innerWidth < 1024 }" @resize.window="sidebarOpen = window.innerWidth >= 640; sidebarCollapsed = window.innerWidth < 1024">
+<body>
 
   <!-- Mobile Sidebar Backdrop -->
   <div x-show="sidebarOpen && window.innerWidth < 640" 
@@ -208,13 +216,31 @@
       <div class="flex items-center gap-4">
         <!-- Notifications -->
         <div class="relative" x-data="dropdown()">
-          <button @click="toggle()" type="button" id="notifications-button" aria-expanded="false" aria-haspopup="true" class="relative p-1 text-text-tertiary rounded-full hover:text-text-secondary focus:outline-none focus:ring-2 focus:ring-focus-ring"  x-html="$icon('bell', 'w-6 h-6')">
+          <button @click="toggle()" 
+                  type="button" 
+                  id="notifications-button" 
+                  :aria-expanded="open.toString()"
+                  aria-haspopup="true" 
+                  class="relative p-1 text-text-tertiary rounded-full hover:text-text-secondary focus:outline-none focus:ring-2 focus:ring-focus-ring"  
+                  x-html="$icon('bell', 'w-6 h-6')">
             <span class="sr-only">View notifications</span>
             <!-- Notification indicator -->
             <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-danger rounded-full border-2 border-bg-secondary"></span>
           </button>
           <!-- Dropdown menu -->
-          <nav x-show="open" @click.away="close()" class="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-md bg-bg-secondary py-1 shadow-md border border-border focus:outline-none" aria-label="Notifications menu" role="menu" aria-labelledby="notifications-button">
+          <nav x-show="open" 
+               @click.away="close()" 
+               @click.outside="close()"
+               x-transition:enter="transition ease-out duration-100"
+               x-transition:enter-start="transform opacity-0 scale-95"
+               x-transition:enter-end="transform opacity-100 scale-100"
+               x-transition:leave="transition ease-in duration-75"
+               x-transition:leave-start="transform opacity-100 scale-100"
+               x-transition:leave-end="transform opacity-0 scale-95"
+               class="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-md bg-bg-secondary py-1 shadow-md border border-border focus:outline-none" 
+               aria-label="Notifications menu" 
+               role="menu" 
+               aria-labelledby="notifications-button">
             <div class="px-4 py-3 text-sm border-b border-divider">
               <div class="font-medium text-text-primary">Notifications</div>
             </div>
@@ -259,7 +285,7 @@
         <!-- Theme Controls -->
         <div class="flex items-center gap-2">
           <!-- Light/Dark Theme Toggle -->
-          <div x-data="themeController" class="flex items-center space-x-2">
+          <div class="flex items-center space-x-2">
             <button @click="toggleLightDark()" 
                     class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2"
                     :class="{'bg-primary': isTheme('dark'), 'bg-bg-tertiary': !isTheme('dark')}">
@@ -276,26 +302,43 @@
           </div>
 
           <!-- White Label Theme Selector -->
-          <div x-data="themeController" class="relative">
-            <button @click="$refs.themesDropdown.classList.toggle('hidden')" class="inline-flex items-center px-3 py-1.5 text-sm border border-border rounded-md hover:bg-bg-tertiary">
+          <div class="relative" x-data="dropdown()">
+            <button @click="toggle()" 
+                    type="button" 
+                    id="theme-selector-button" 
+                    :aria-expanded="open.toString()"
+                    aria-haspopup="true" 
+                    class="inline-flex items-center px-3 py-1.5 text-sm border border-border rounded-md hover:bg-bg-tertiary">
               <span class="text-text-secondary">Theme: <span x-text="whiteLabelTheme === 'acme' ? 'ACME (Default)' : whiteLabelTheme === 'do-not-use' ? 'Do Not Use' : whiteLabelTheme.charAt(0).toUpperCase() + whiteLabelTheme.slice(1)"></span></span>
               <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
-            <div x-ref="themesDropdown" class="absolute right-0 z-10 mt-1 w-40 bg-bg-secondary rounded-md shadow-md border border-border hidden">
-              <ul class="py-1 text-sm text-text-secondary">
+            <div x-show="open" 
+                 @click.away="close()"
+                 @click.outside="close()" 
+                 x-transition:enter="transition ease-out duration-100"
+                 x-transition:enter-start="transform opacity-0 scale-95"
+                 x-transition:enter-end="transform opacity-100 scale-100"
+                 x-transition:leave="transition ease-in duration-75"
+                 x-transition:leave-start="transform opacity-100 scale-100"
+                 x-transition:leave-end="transform opacity-0 scale-95"
+                 class="absolute right-0 z-10 mt-1 w-40 bg-bg-secondary rounded-md shadow-md border border-border"
+                 aria-labelledby="theme-selector-button">
+              <ul class="py-1 text-sm text-text-secondary" role="menu">
                 <li>
-                  <button @click="setWhiteLabelTheme('acme'); $refs.themesDropdown.classList.add('hidden')"
+                  <button @click="setWhiteLabelTheme('acme'); close()"
                           class="w-full text-left block px-4 py-2 hover:bg-bg-tertiary"
-                          :class="{'bg-bg-tertiary': isWhiteLabelTheme('acme')}">
+                          :class="{'bg-bg-tertiary': isWhiteLabelTheme('acme')}"
+                          role="menuitem">
                     ACME (Default)
                   </button>
                 </li>
                 <li>
-                  <button @click="setWhiteLabelTheme('do-not-use'); $refs.themesDropdown.classList.add('hidden')"
+                  <button @click="setWhiteLabelTheme('do-not-use'); close()"
                           class="w-full text-left block px-4 py-2 hover:bg-bg-tertiary"
-                          :class="{'bg-bg-tertiary': isWhiteLabelTheme('do-not-use')}">
+                          :class="{'bg-bg-tertiary': isWhiteLabelTheme('do-not-use')}"
+                          role="menuitem">
                     Do Not Use
                   </button>
                 </li>
@@ -305,11 +348,30 @@
         </div>
 
         <div class="relative" x-data="dropdown()">
-          <button @click="toggle()" type="button" id="user-menu-button" aria-expanded="false" aria-haspopup="true" class="flex text-sm rounded-full focus:ring-2 focus:ring-focus-ring border border-border overflow-hidden">
+          <button @click="toggle()" 
+                  type="button" 
+                  id="user-menu-button" 
+                  :aria-expanded="open.toString()"
+                  aria-haspopup="true" 
+                  class="flex text-sm rounded-full focus:ring-2 focus:ring-focus-ring border border-border overflow-hidden">
             <img class="w-8 h-8" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
           </button>
           <!-- Dropdown menu -->
-          <nav x-show="open" @click.away="close()" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-bg-secondary py-1 shadow-md border border-border focus:outline-none" aria-label="User menu" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+          <nav x-show="open" 
+               @click.away="close()"
+               @click.outside="close()" 
+               x-transition:enter="transition ease-out duration-100"
+               x-transition:enter-start="transform opacity-0 scale-95"
+               x-transition:enter-end="transform opacity-100 scale-100"
+               x-transition:leave="transition ease-in duration-75"
+               x-transition:leave-start="transform opacity-100 scale-100"
+               x-transition:leave-end="transform opacity-0 scale-95"
+               class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-bg-secondary py-1 shadow-md border border-border focus:outline-none" 
+               aria-label="User menu" 
+               role="menu" 
+               aria-orientation="vertical" 
+               aria-labelledby="user-menu-button" 
+               tabindex="-1">
             <a href="/src/templates/profile.html" class="block px-4 py-2 text-sm text-text-secondary hover:bg-bg-tertiary" role="menuitem">Your Profile</a>
             <a href="#" class="block px-4 py-2 text-sm text-text-secondary hover:bg-bg-tertiary" role="menuitem">Settings</a>
             <a href="#" class="block px-4 py-2 text-sm text-text-secondary hover:bg-bg-tertiary" role="menuitem">Sign out</a>
@@ -374,7 +436,27 @@
   </main>
 
   <!-- Toast/Notification Component -->
-  <div x-data="notification()"
+  <div x-data="{ 
+          visible: false, 
+          message: '',
+          type: 'info',
+          show(message, type = 'info', duration = 3000) {
+            this.visible = true;
+            this.message = message;
+            this.type = type;
+            
+            if (this.timeout) {
+              clearTimeout(this.timeout);
+            }
+            
+            this.timeout = setTimeout(() => {
+              this.hide();
+            }, duration);
+          },
+          hide() {
+            this.visible = false;
+          }
+       }"
        x-show="visible"
        @click="hide()"
        class="fixed bottom-4 right-4 z-50 flex items-center p-4 max-w-xs border rounded-lg shadow-md transition-all duration-300 ease-in-out"

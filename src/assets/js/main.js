@@ -278,9 +278,38 @@ document.addEventListener('alpine:init', () => {
     }
   }));
 
-  // Dropdown component
+  // Dropdown component - with global coordination to close other dropdowns
   Alpine.data('dropdown', () => ({
     open: false,
+    init() {
+      // Listen for dropdown close events from other instances
+      this.$watch('open', value => {
+        if (value === true) {
+          // Dispatch a custom event when this dropdown is opened
+          window.dispatchEvent(new CustomEvent('dropdown-opened', {
+            detail: { id: this.$el.id || this.$id('dropdown') }
+          }));
+        }
+      });
+
+      // Close this dropdown when another dropdown is opened
+      const closeListener = event => {
+        // Don't close if this is the dropdown that was just opened
+        const openedId = event.detail.id;
+        const thisId = this.$el.id || this.$id('dropdown');
+        
+        if (openedId !== thisId && this.open) {
+          this.open = false;
+        }
+      };
+
+      window.addEventListener('dropdown-opened', closeListener);
+
+      // Clean up event listener when the component is destroyed
+      this.$cleanup = () => {
+        window.removeEventListener('dropdown-opened', closeListener);
+      };
+    },
     toggle() {
       this.open = !this.open;
     },
