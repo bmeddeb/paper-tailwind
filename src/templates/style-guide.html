@@ -1,196 +1,258 @@
 <!DOCTYPE html>
-<html lang="en" x-data="themeController()" :class="{ 'dark': isTheme('dark') }" x-init="initTheme()">
+<!--
+  Style Guide Page
+  
+  Features:
+  - Shows all design tokens and components
+  - Built on top of _base.html template
+  - Dark/light mode support
+  - White label theme selector
+-->
+<html lang="en" 
+      x-data="{ 
+        ...themeController(),
+        sidebarOpen: window.innerWidth >= 640, 
+        sidebarCollapsed: window.innerWidth < 1024
+      }" 
+      :class="{ 'dark': isTheme('dark') }" 
+      x-init="initTheme()"
+      @resize.window="sidebarOpen = window.innerWidth >= 640; sidebarCollapsed = window.innerWidth < 1024">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Style Guide</title>
+  <link rel="icon" type="image/png" href="/src/assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="/src/assets/images/apple-touch-icon.png">
   <link rel="stylesheet" href="/dist/style.css">
-
 </head>
-<body x-data="{ sidebarOpen: true, sidebarCollapsed: false }">
+<body>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div x-show="sidebarOpen && window.innerWidth < 640" 
+       @click="sidebarOpen = false" 
+       class="fixed inset-0 z-30 bg-overlay transition-opacity"
+       x-transition:enter="transition ease-out duration-300"
+       x-transition:enter-start="opacity-0"
+       x-transition:enter-end="opacity-100"
+       x-transition:leave="transition ease-in duration-300"
+       x-transition:leave-start="opacity-100"
+       x-transition:leave-end="opacity-0"></div>
 
   <!-- Sidebar -->
-  <aside id="default-sidebar" class="fixed top-0 left-0 z-40 h-screen overflow-y-auto pt-4 pb-5 px-3 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform -translate-x-full sm:translate-x-0" :class="sidebarCollapsed ? 'w-[53px]' : 'w-64'" aria-label="Sidenav">
+  <aside id="default-sidebar" 
+         class="fixed top-0 left-0 z-40 h-screen overflow-y-auto pt-4 pb-5 px-3 bg-sidebar-bg border-r border-sidebar-border transition-all duration-300 w-64" 
+         :class="[
+           sidebarOpen ? 'translate-x-0' : '-translate-x-full',
+           sidebarCollapsed ? 'w-[53px]' : 'w-64'
+         ]" 
+         aria-label="Main Navigation">
     <!-- Logo Section -->
     <div class="h-[60px] flex items-center space-x-2 justify-start px-3 pt-2.5 transition-all duration-300" style="border-bottom: 1px solid; border-color: inherit;">
       <a href="/">
         <img :class="sidebarCollapsed ? 'h-6.5 w-6.5' : 'h-9 w-9'" class="transition-all duration-300" src="/src/assets/images/gradelib_e.png" alt="GradeLib Logo">
       </a>
-      <span x-show="!sidebarCollapsed" class="font-bold text-lg text-gray-900 dark:text-white">GradeLib</span>
+      <span x-show="!sidebarCollapsed" class="font-bold text-lg text-sidebar-text">GradeLib</span>
     </div>
 
-    <ul class="space-y-2 mt-4">
+    <nav aria-label="Sidebar Navigation">
+      <ul class="space-y-2 mt-4">
       <!-- Pages Section -->
       <li x-data="{ open: false }" x-init="$watch('sidebarCollapsed', value => { if (value) open = false })">
-        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-          <span x-html="$icon('document','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
+        <button @click="sidebarCollapsed ? (sidebarCollapsed = false, open = true) : open = !open" 
+                type="button" 
+                aria-expanded="false"
+                :aria-expanded="open.toString()"
+                aria-controls="pages-submenu"
+                class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-sidebar-text rounded-lg transition duration-75 hover:bg-sidebar-item-hover">
+          <span x-html="$icon('document','w-6 h-6 text-sidebar-text-muted transition duration-75 hover:text-sidebar-text')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Pages</span>
           <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
         </button>
-        <ul x-show="open" x-cloak class="py-2 space-y-2">
-          <li><a href="/src/templates/timeline.html" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Timeline</a></li>
-          <li><a href="/src/templates/table.html" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Tables</a></li>
-          <li><a href="/src/templates/login.html" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Login</a></li>
-          <li><a href="/src/templates/register.html" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Register</a></li>
-          <li><a href="/src/templates/profile.html" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a></li>
+        <ul id="pages-submenu" x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 transform -translate-y-2"
+           x-transition:enter-end="opacity-100 transform translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 transform translate-y-0"
+           x-transition:leave-end="opacity-0 transform -translate-y-2"
+           x-cloak class="py-2 space-y-2">
+          <li><a href="/src/templates/timeline.html" class="sidebar-link">Timeline</a></li>
+          <li><a href="/src/templates/table.html" class="sidebar-link">Tables</a></li>
+          <li><a href="/src/templates/login.html" class="sidebar-link">Login</a></li>
+          <li><a href="/src/templates/register.html" class="sidebar-link">Register</a></li>
+          <li><a href="/src/templates/profile.html" class="sidebar-link">Profile</a></li>
         </ul>
       </li>
       <!-- Forms Section -->
       <li x-data="{ open: false }" x-init="$watch('sidebarCollapsed', value => { if (value) open = false })">
-        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-          <span x-html="$icon('clipboard','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
+        <button @click="sidebarCollapsed ? (sidebarCollapsed = false, open = true) : open = !open" 
+                type="button" 
+                aria-expanded="false"
+                :aria-expanded="open.toString()"
+                aria-controls="forms-submenu"
+                class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-sidebar-text rounded-lg transition duration-75 hover:bg-sidebar-item-hover">
+          <span x-html="$icon('clipboard','w-6 h-6 text-sidebar-text-muted transition duration-75 hover:text-sidebar-text')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Forms</span>
           <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
         </button>
-        <ul x-show="open" x-cloak class="py-2 space-y-2">
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Input Fields</a></li>
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Select</a></li>
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Checkbox</a></li>
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Radio</a></li>
+        <ul id="forms-submenu" x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 transform -translate-y-2"
+           x-transition:enter-end="opacity-100 transform translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 transform translate-y-0"
+           x-transition:leave-end="opacity-0 transform -translate-y-2"
+           x-cloak class="py-2 space-y-2">
+          <li><a href="#" class="sidebar-link">Input Fields</a></li>
+          <li><a href="#" class="sidebar-link">Select</a></li>
+          <li><a href="#" class="sidebar-link">Checkbox</a></li>
+          <li><a href="#" class="sidebar-link">Radio</a></li>
         </ul>
       </li>
       <!-- Tables Section -->
       <li x-data="{ open: false }" x-init="$watch('sidebarCollapsed', value => { if (value) open = false })">
-        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-          <span x-html="$icon('table','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
+        <button @click="sidebarCollapsed ? (sidebarCollapsed = false, open = true) : open = !open" 
+                type="button" 
+                aria-expanded="false"
+                :aria-expanded="open.toString()"
+                aria-controls="tables-submenu"
+                class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-sidebar-text rounded-lg transition duration-75 hover:bg-sidebar-item-hover">
+          <span x-html="$icon('table','w-6 h-6 text-sidebar-text-muted transition duration-75 hover:text-sidebar-text')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Tables</span>
           <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
         </button>
-        <ul x-show="open" x-cloak class="py-2 space-y-2">
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Basic Table</a></li>
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Sortable Table</a></li>
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Data Table</a></li>
+        <ul id="tables-submenu" x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 transform -translate-y-2"
+           x-transition:enter-end="opacity-100 transform translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 transform translate-y-0"
+           x-transition:leave-end="opacity-0 transform -translate-y-2"
+           x-cloak class="py-2 space-y-2">
+          <li><a href="#" class="sidebar-link">Basic Table</a></li>
+          <li><a href="#" class="sidebar-link">Sortable Table</a></li>
+          <li><a href="#" class="sidebar-link">Data Table</a></li>
         </ul>
       </li>
       <!-- Charts Section -->
       <li x-data="{ open: false }" x-init="$watch('sidebarCollapsed', value => { if (value) open = false })">
-        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-          <span x-html="$icon('chartBar','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
+        <button @click="sidebarCollapsed ? (sidebarCollapsed = false, open = true) : open = !open" 
+                type="button"
+                aria-expanded="false"
+                :aria-expanded="open.toString()"
+                aria-controls="charts-submenu"
+                class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-sidebar-text rounded-lg transition duration-75 hover:bg-sidebar-item-hover">
+          <span x-html="$icon('chartBar','w-6 h-6 text-sidebar-text-muted transition duration-75 hover:text-sidebar-text')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Charts</span>
           <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
         </button>
-        <ul x-show="open" x-cloak class="py-2 space-y-2">
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Line Chart</a></li>
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Bar Chart</a></li>
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Pie Chart</a></li>
+        <ul id="charts-submenu" x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 transform -translate-y-2"
+           x-transition:enter-end="opacity-100 transform translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 transform translate-y-0"
+           x-transition:leave-end="opacity-0 transform -translate-y-2"
+           x-cloak class="py-2 space-y-2">
+          <li><a href="#" class="sidebar-link">Line Chart</a></li>
+          <li><a href="#" class="sidebar-link">Bar Chart</a></li>
+          <li><a href="#" class="sidebar-link">Pie Chart</a></li>
         </ul>
       </li>
       <!-- Calendar Section -->
       <li x-data="{ open: false }" x-init="$watch('sidebarCollapsed', value => { if (value) open = false })">
-        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-          <span x-html="$icon('calendar','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
+        <button @click="sidebarCollapsed ? (sidebarCollapsed = false, open = true) : open = !open" 
+                type="button"
+                aria-expanded="false"
+                :aria-expanded="open.toString()"
+                aria-controls="calendar-submenu"
+                class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-sidebar-text rounded-lg transition duration-75 hover:bg-sidebar-item-hover">
+          <span x-html="$icon('calendar','w-6 h-6 text-sidebar-text-muted transition duration-75 hover:text-sidebar-text')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Calendar</span>
           <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
         </button>
-        <ul x-show="open" x-cloak class="py-2 space-y-2">
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Monthly</a></li>
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Weekly</a></li>
-          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Daily</a></li>
+        <ul id="calendar-submenu" x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 transform -translate-y-2"
+           x-transition:enter-end="opacity-100 transform translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 transform translate-y-0"
+           x-transition:leave-end="opacity-0 transform -translate-y-2"
+           x-cloak class="py-2 space-y-2">
+          <li><a href="#" class="sidebar-link">Monthly</a></li>
+          <li><a href="#" class="sidebar-link">Weekly</a></li>
+          <li><a href="#" class="sidebar-link">Daily</a></li>
         </ul>
       </li>
 
       <!-- Divider -->
       <div class="pt-4 pb-2">
-        <hr class="border-gray-200 dark:border-gray-700" />
+        <hr class="border-divider" />
       </div>
 
       <!-- Style Guide Section -->
       <li>
-        <a href="/src/templates/style-guide.html" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-medium text-blue-600 dark:text-blue-400 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700">
-          <span x-html="$icon('swatch','w-6 h-6 text-blue-600 dark:text-blue-400')"></span>
-          <span class="flex-1 ml-3 text-left whitespace-nowrap">Style Guide</span>
+        <a href="/src/templates/style-guide.html" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-sidebar-text rounded-lg transition duration-75 hover:bg-sidebar-item-hover bg-primary-muted">
+          <span x-html="$icon('swatch','w-6 h-6 text-primary transition duration-75')"></span>
+          <span class="flex-1 ml-3 text-left whitespace-nowrap text-primary">Style Guide</span>
         </a>
       </li>
-    </ul>
+      </ul>
+    </nav>
   </aside>
 
   <!-- Main content wrapper -->
-  <div class="min-h-screen transition-all duration-300 bg-gray-50 dark:!bg-gray-900 main-bg" :class="sidebarCollapsed ? 'lg:ml-[53px]' : 'lg:ml-64'">
+  <main class="min-h-screen transition-all duration-300 bg-bg-primary main-bg" 
+       :class="{ 
+         'sm:ml-[53px]': sidebarOpen && sidebarCollapsed, 
+         'sm:ml-64': sidebarOpen && !sidebarCollapsed,
+         'ml-0': !sidebarOpen
+       }">
     <!-- Main content -->
     <div class="p-4">
     <!-- Navbar -->
-    <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2.5 mb-5 flex items-center justify-between">
+    <header class="bg-navbar-bg border-b border-navbar-border px-4 py-2.5 mb-5">
+      <nav class="flex items-center justify-between">
       <div class="flex items-center">
-        <button @click="sidebarCollapsed = !sidebarCollapsed" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 dark:text-gray-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600">
-          <span class="sr-only">Toggle sidebar</span>
+        <!-- Mobile menu button -->
+        <button @click="sidebarOpen = !sidebarOpen" type="button" class="sm:hidden inline-flex items-center p-2 text-sm text-text-tertiary rounded-lg hover:bg-bg-tertiary focus:outline-none focus:ring-2 focus:ring-focus-ring mr-1">
+          <span class="sr-only">Toggle mobile sidebar</span>
+          <span x-html="sidebarOpen ? $icon('menuLeft', 'w-6 h-6') : $icon('menuRight', 'w-6 h-6')"></span>
+        </button>
+        
+        <!-- Desktop sidebar collapse button -->
+        <button @click="sidebarCollapsed = !sidebarCollapsed" type="button" class="hidden sm:inline-flex items-center p-2 text-sm text-text-tertiary rounded-lg hover:bg-bg-tertiary focus:outline-none focus:ring-2 focus:ring-focus-ring">
+          <span class="sr-only">Toggle sidebar collapse</span>
           <span x-html="sidebarCollapsed ? $icon('menuRight', 'w-6 h-6') : $icon('menuLeft', 'w-6 h-6')"></span>
         </button>
-        <span class="self-center text-xl font-semibold whitespace-nowrap ml-2 dark:text-white">Style Guide</span>
+        
+        <span class="self-center text-xl font-semibold whitespace-nowrap ml-2 text-navbar-text">Style Guide</span>
       </div>
 
       <div class="flex items-center gap-4">
-        <!-- Notifications -->
-        <div class="relative" x-data="dropdown()">
-          <button @click="toggle()" type="button" class="relative p-1 text-gray-500 rounded-full hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:text-gray-200 dark:focus:ring-gray-600"  x-html="$icon('bell', 'w-6 h-6')">
-            <span class="sr-only">View notifications</span>
-            <!-- Notification indicator -->
-            <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white dark:border-gray-800"></span>
-          </button>
-          <!-- Dropdown menu -->
-          <div x-show="open" @click.away="close()" class="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-md bg-white dark:bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu">
-            <div class="px-4 py-3 text-sm border-b border-gray-200 dark:border-gray-700">
-              <div class="font-medium">Notifications</div>
-            </div>
-            <div class="max-h-60 overflow-y-auto">
-              <a href="#" class="flex px-4 py-3 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <div class="flex-shrink-0">
-                  <div class="p-2 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-300"  x-html="$icon('userPlus', 'w-5 h-5')"></div>
-                </div>
-                <div class="w-full pl-3">
-                  <div class="text-gray-500 dark:text-gray-400 text-sm mb-1.5">New user registered: <span class="font-semibold text-gray-900 dark:text-white">Jane Cooper</span></div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">10 minutes ago</div>
-                </div>
-              </a>
-              <a href="#" class="flex px-4 py-3 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <div class="flex-shrink-0">
-                  <div class="p-2 rounded-full bg-green-100 dark:bg-green-900 text-green-500 dark:text-green-300"  x-html="$icon('chartBar', 'w-5 h-5')"></div>
-                </div>
-                <div class="w-full pl-3">
-                  <div class="text-gray-500 dark:text-gray-400 text-sm mb-1.5"><span class="font-semibold text-gray-900 dark:text-white">Dashboard reports</span> are ready to view</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">3 hours ago</div>
-                </div>
-              </a>
-              <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
-                <div class="flex-shrink-0">
-                  <div class="p-2 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-500 dark:text-yellow-300"  x-html="$icon('document', 'w-5 h-5')"></div>
-                </div>
-                <div class="w-full pl-3">
-                  <div class="text-gray-500 dark:text-gray-400 text-sm mb-1.5"><span class="font-semibold text-gray-900 dark:text-white">Documentation</span> has been updated</div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">Yesterday</div>
-                </div>
-              </a>
-            </div>
-            <a href="#" class="block py-2 text-sm font-medium text-center text-gray-900 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white">
-              <div class="inline-flex items-center">
-                <span  x-html="$icon('eye', 'w-4 h-4 mr-2')"></span>
-                View all
-              </div>
-            </a>
-          </div>
-        </div>
-
         <!-- Theme Controls -->
         <div class="flex items-center gap-2">
           <!-- Light/Dark Theme Toggle -->
-          <div x-data="themeController" class="flex items-center space-x-2">
-            <button @click="toggleLightDark()" class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    :class="{'bg-blue-600': isTheme('dark'), 'bg-gray-200': !isTheme('dark')}">
+          <div class="flex items-center space-x-2">
+            <button @click="toggleLightDark()" 
+                    class="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-focus-ring focus:ring-offset-2"
+                    :class="{'bg-primary': isTheme('dark'), 'bg-bg-tertiary': !isTheme('dark')}">
               <span class="sr-only">Toggle dark mode</span>
               <span class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
                     :class="{'translate-x-6': isTheme('dark'), 'translate-x-1': !isTheme('dark')}">
               </span>
             </button>
-            <span class="text-sm font-medium">
+            <span class="text-sm font-medium text-text-secondary">
               <span x-show="isTheme('light')">🌞</span>
               <span x-show="isTheme('dark')">🌙</span>
               <span x-show="isTheme('system')">⚙️</span>
@@ -198,444 +260,537 @@
           </div>
 
           <!-- White Label Theme Selector -->
-          <div x-data="themeController" class="relative">
-            <button @click="$refs.themesDropdown.classList.toggle('hidden')" class="inline-flex items-center px-3 py-1.5 text-sm border rounded-md hover:bg-gray-50">
-              <span class="text-gray-700 dark:text-gray-200">Theme: <span x-text="whiteLabelTheme === 'acme' ? 'ACME (Default)' : whiteLabelTheme === 'do-not-use' ? 'Do Not Use' : whiteLabelTheme.charAt(0).toUpperCase() + whiteLabelTheme.slice(1)"></span></span>
+          <div class="relative" x-data="dropdown()">
+            <button @click="toggle()" 
+                    type="button" 
+                    id="theme-selector-button" 
+                    :aria-expanded="open.toString()"
+                    aria-haspopup="true" 
+                    class="inline-flex items-center px-3 py-1.5 text-sm border border-border rounded-md hover:bg-bg-tertiary">
+              <span class="text-text-secondary">Theme: <span x-text="whiteLabelTheme === 'acme' ? 'ACME (Default)' : whiteLabelTheme === 'do-not-use' ? 'Do Not Use' : whiteLabelTheme.charAt(0).toUpperCase() + whiteLabelTheme.slice(1)"></span></span>
               <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
               </svg>
             </button>
-            <div x-ref="themesDropdown" class="absolute right-0 z-10 mt-1 w-40 bg-white dark:bg-gray-800 rounded-md shadow-lg hidden">
-              <ul class="py-1 text-sm text-gray-700 dark:text-gray-200">
+            <div x-show="open" 
+                 @click.away="close()"
+                 @click.outside="close()" 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 transform -translate-y-2"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-2"
+                 class="absolute right-0 z-10 mt-1 w-40 bg-bg-secondary rounded-md shadow-md border border-border"
+                 aria-labelledby="theme-selector-button">
+              <ul class="py-1 text-sm text-text-secondary" role="menu">
                 <li>
-                  <button @click="setWhiteLabelTheme('acme'); $refs.themesDropdown.classList.add('hidden')"
-                          class="w-full text-left block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          :class="{'bg-gray-100 dark:bg-gray-700': isWhiteLabelTheme('acme')}">
+                  <button @click="setWhiteLabelTheme('acme'); close()"
+                          class="w-full text-left block px-4 py-2 hover:bg-bg-tertiary"
+                          :class="{'bg-bg-tertiary': isWhiteLabelTheme('acme')}"
+                          role="menuitem">
                     ACME (Default)
                   </button>
                 </li>
                 <li>
-                  <button @click="setWhiteLabelTheme('do-not-use'); $refs.themesDropdown.classList.add('hidden')"
-                          class="w-full text-left block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          :class="{'bg-gray-100 dark:bg-gray-700': isWhiteLabelTheme('do-not-use')}">
+                  <button @click="setWhiteLabelTheme('do-not-use'); close()"
+                          class="w-full text-left block px-4 py-2 hover:bg-bg-tertiary"
+                          :class="{'bg-bg-tertiary': isWhiteLabelTheme('do-not-use')}"
+                          role="menuitem">
                     Do Not Use
+                  </button>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-
-        <div class="relative" x-data="dropdown()">
-          <button @click="toggle()" type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300">
-            <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
-          </button>
-          <!-- Dropdown menu -->
-          <div x-show="open" @click.away="close()" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-800 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-            <a href="/src/templates/profile.html" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Your Profile</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Settings</a>
-            <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" role="menuitem">Sign out</a>
-          </div>
-        </div>
-        <div>
-          <!-- TODO: replace with actual user data -->
-          <p class="text-sm text-gray-900 dark:text-gray-100">John Doe</p>
-          <p class="text-xs text-gray-500 dark:text-gray-400">Admin</p>
-        </div>
       </div>
+      </nav>
+    </header>
+
+    <!-- Breadcrumbs -->
+    <nav class="mb-5">
+      <ol class="inline-flex items-center space-x-1 text-sm md:space-x-2">
+        <li class="inline-flex items-center">
+          <a href="/" class="inline-flex items-center text-text-tertiary hover:text-primary">
+            <span x-html="$icon('home', 'w-4 h-4 mr-2')"></span>
+            Home
+          </a>
+        </li>
+        <li aria-current="page">
+          <div class="flex items-center">
+            <svg class="w-4 h-4 text-text-tertiary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+            <span class="ml-1 text-text-secondary font-medium md:ml-2">Style Guide</span>
+          </div>
+        </li>
+      </ol>
     </nav>
 
     <!-- Style Guide Content -->
-    <div class="px-2">
-      <h1 class="text-2xl font-semibold mb-6 dark:text-white">Color Palette</h1>
+    <div class="bg-card-bg rounded-lg shadow-md border border-card-border p-6 mb-6">
+      <h1 class="text-2xl font-bold text-card-title mb-6">Design System Style Guide</h1>
       
-      <!-- Brand Color Sections -->
-      <div class="mb-10">
-        <h2 class="text-xl font-semibold mb-4 text-text-primary">Brand Colors</h2>
-        <p class="mb-6 text-text-secondary">These are the semantic color tokens defined in <code class="bg-bg-tertiary px-1 py-0.5 rounded">variables.css</code> that change with themes. They provide meaningful abstractions for the UI.</p>
-        
-        <!-- Brand Primary Colors -->
-        <div class="mb-8">
-          <h3 class="text-lg font-medium mb-3 text-text-primary">Primary Colors</h3>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="flex flex-col">
-              <div class="h-24 bg-primary rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Primary</p>
-                <p class="text-text-tertiary">--color-primary</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-24 bg-primary-hover rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Primary Hover</p>
-                <p class="text-text-tertiary">--color-primary-hover</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-24 bg-primary-active rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Primary Active</p>
-                <p class="text-text-tertiary">--color-primary-active</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-24 bg-primary-muted rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Primary Muted</p>
-                <p class="text-text-tertiary">--color-primary-muted</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Secondary & Accent Colors -->
-        <div class="mb-8">
-          <h3 class="text-lg font-medium mb-3 text-text-primary">Secondary & Accent Colors</h3>
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-            <div class="flex flex-col">
-              <div class="h-24 bg-secondary rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Secondary</p>
-                <p class="text-text-tertiary">--color-secondary</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-24 bg-secondary-hover rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Secondary Hover</p>
-                <p class="text-text-tertiary">--color-secondary-hover</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-24 bg-secondary-active rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Secondary Active</p>
-                <p class="text-text-tertiary">--color-secondary-active</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-24 bg-secondary-muted rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Secondary Muted</p>
-                <p class="text-text-tertiary">--color-secondary-muted</p>
-              </div>
-            </div>
-          </div>
+      <div class="space-y-12">
+        <!-- Color Tokens -->
+        <section>
+          <h2 class="text-xl font-semibold text-card-title mb-4">Color Tokens</h2>
           
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div class="flex flex-col">
-              <div class="h-24 bg-accent rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Accent</p>
-                <p class="text-text-tertiary">--color-accent</p>
+          <div class="space-y-6">
+            <!-- Primary Colors -->
+            <div>
+              <h3 class="text-lg font-medium text-card-title mb-3">Primary Colors</h3>
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-primary p-4 rounded-lg text-text-on-primary flex flex-col">
+                  <span class="font-medium">Primary</span>
+                  <span class="text-sm opacity-80">--color-primary</span>
+                </div>
+                <div class="bg-primary-hover p-4 rounded-lg text-text-on-primary flex flex-col">
+                  <span class="font-medium">Primary Hover</span>
+                  <span class="text-sm opacity-80">--color-primary-hover</span>
+                </div>
+                <div class="bg-primary-active p-4 rounded-lg text-text-on-primary flex flex-col">
+                  <span class="font-medium">Primary Active</span>
+                  <span class="text-sm opacity-80">--color-primary-active</span>
+                </div>
+                <div class="bg-primary-muted p-4 rounded-lg text-primary flex flex-col">
+                  <span class="font-medium">Primary Muted</span>
+                  <span class="text-sm opacity-80">--color-primary-muted</span>
+                </div>
               </div>
             </div>
-            <div class="flex flex-col">
-              <div class="h-24 bg-accent-hover rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Accent Hover</p>
-                <p class="text-text-tertiary">--color-accent-hover</p>
+            
+            <!-- Semantic Colors -->
+            <div>
+              <h3 class="text-lg font-medium text-card-title mb-3">Semantic Colors</h3>
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-success p-4 rounded-lg text-text-on-primary flex flex-col">
+                  <span class="font-medium">Success</span>
+                  <span class="text-sm opacity-80">--color-success</span>
+                </div>
+                <div class="bg-warning p-4 rounded-lg text-text-on-primary flex flex-col">
+                  <span class="font-medium">Warning</span>
+                  <span class="text-sm opacity-80">--color-warning</span>
+                </div>
+                <div class="bg-danger p-4 rounded-lg text-text-on-primary flex flex-col">
+                  <span class="font-medium">Danger</span>
+                  <span class="text-sm opacity-80">--color-danger</span>
+                </div>
+                <div class="bg-info p-4 rounded-lg text-text-on-primary flex flex-col">
+                  <span class="font-medium">Info</span>
+                  <span class="text-sm opacity-80">--color-info</span>
+                </div>
               </div>
             </div>
-            <div class="flex flex-col">
-              <div class="h-24 bg-accent-active rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Accent Active</p>
-                <p class="text-text-tertiary">--color-accent-active</p>
+            
+            <!-- Background Colors -->
+            <div>
+              <h3 class="text-lg font-medium text-card-title mb-3">Background Colors</h3>
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-bg-primary p-4 rounded-lg text-text-primary flex flex-col border border-card-border">
+                  <span class="font-medium">BG Primary</span>
+                  <span class="text-sm opacity-80">--color-bg-primary</span>
+                </div>
+                <div class="bg-bg-secondary p-4 rounded-lg text-text-primary flex flex-col border border-card-border">
+                  <span class="font-medium">BG Secondary</span>
+                  <span class="text-sm opacity-80">--color-bg-secondary</span>
+                </div>
+                <div class="bg-bg-tertiary p-4 rounded-lg text-text-primary flex flex-col border border-card-border">
+                  <span class="font-medium">BG Tertiary</span>
+                  <span class="text-sm opacity-80">--color-bg-tertiary</span>
+                </div>
+                <div class="bg-bg-accent p-4 rounded-lg text-text-primary flex flex-col border border-card-border">
+                  <span class="font-medium">BG Accent</span>
+                  <span class="text-sm opacity-80">--color-bg-accent</span>
+                </div>
               </div>
             </div>
-            <div class="flex flex-col">
-              <div class="h-24 bg-accent-muted rounded-t-lg shadow-sm"></div>
-              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-text-primary">Accent Muted</p>
-                <p class="text-text-tertiary">--color-accent-muted</p>
+            
+            <!-- Text Colors -->
+            <div>
+              <h3 class="text-lg font-medium text-card-title mb-3">Text Colors</h3>
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="bg-card-bg p-4 rounded-lg border border-card-border flex flex-col">
+                  <span class="font-medium text-text-primary">Text Primary</span>
+                  <span class="text-sm opacity-80 text-text-primary">--color-text-primary</span>
+                </div>
+                <div class="bg-card-bg p-4 rounded-lg border border-card-border flex flex-col">
+                  <span class="font-medium text-text-secondary">Text Secondary</span>
+                  <span class="text-sm opacity-80 text-text-secondary">--color-text-secondary</span>
+                </div>
+                <div class="bg-card-bg p-4 rounded-lg border border-card-border flex flex-col">
+                  <span class="font-medium text-text-tertiary">Text Tertiary</span>
+                  <span class="text-sm opacity-80 text-text-tertiary">--color-text-tertiary</span>
+                </div>
+                <div class="bg-card-bg p-4 rounded-lg border border-card-border flex flex-col">
+                  <span class="font-medium text-text-accent">Text Accent</span>
+                  <span class="text-sm opacity-80 text-text-accent">--color-text-accent</span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
         
-        <!-- Feedback Colors -->
-        <div class="mb-8">
-          <h3 class="text-lg font-medium mb-3 text-text-primary">Feedback Colors</h3>
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            <!-- Success -->
-            <div class="bg-bg-secondary rounded-lg p-4 shadow">
-              <h4 class="font-medium text-text-primary mb-2">Success</h4>
-              <div class="grid grid-cols-3 gap-2">
-                <div class="flex flex-col">
-                  <div class="h-12 bg-success rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Default</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-12 bg-success-hover rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Hover</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-12 bg-success-muted rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Muted</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Warning -->
-            <div class="bg-bg-secondary rounded-lg p-4 shadow">
-              <h4 class="font-medium text-text-primary mb-2">Warning</h4>
-              <div class="grid grid-cols-3 gap-2">
-                <div class="flex flex-col">
-                  <div class="h-12 bg-warning rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Default</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-12 bg-warning-hover rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Hover</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-12 bg-warning-muted rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Muted</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Error -->
-            <div class="bg-bg-secondary rounded-lg p-4 shadow">
-              <h4 class="font-medium text-text-primary mb-2">Error</h4>
-              <div class="grid grid-cols-3 gap-2">
-                <div class="flex flex-col">
-                  <div class="h-12 bg-danger rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Default</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-12 bg-danger-hover rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Hover</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-12 bg-danger-muted rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Muted</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Info -->
-            <div class="bg-bg-secondary rounded-lg p-4 shadow">
-              <h4 class="font-medium text-text-primary mb-2">Info</h4>
-              <div class="grid grid-cols-3 gap-2">
-                <div class="flex flex-col">
-                  <div class="h-12 bg-info rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Default</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-12 bg-info-hover rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Hover</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-12 bg-info-muted rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-bg-tertiary">Muted</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- UI Colors -->
-      <div class="mb-10">
-        <h2 class="text-xl font-semibold mb-4 text-text-primary">UI Colors</h2>
-        <p class="mb-6 text-text-secondary">These colors provide the foundation for the UI elements and adapt to different themes.</p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Background Colors -->
-          <div class="bg-bg-secondary rounded-lg p-4 shadow">
-            <h3 class="font-medium text-text-primary mb-3">Background Colors</h3>
-            <div class="space-y-3">
-              <div class="flex items-center">
-                <div class="w-16 h-16 bg-bg-primary rounded-lg shadow-sm"></div>
-                <div class="ml-4">
-                  <p class="font-medium text-text-primary">Primary Background</p>
-                  <p class="text-text-tertiary text-sm">--color-bg-primary</p>
-                </div>
-              </div>
-              <div class="flex items-center">
-                <div class="w-16 h-16 bg-bg-secondary rounded-lg shadow-sm"></div>
-                <div class="ml-4">
-                  <p class="font-medium text-text-primary">Secondary Background</p>
-                  <p class="text-text-tertiary text-sm">--color-bg-secondary</p>
-                </div>
-              </div>
-              <div class="flex items-center">
-                <div class="w-16 h-16 bg-bg-tertiary rounded-lg shadow-sm"></div>
-                <div class="ml-4">
-                  <p class="font-medium text-text-primary">Tertiary Background</p>
-                  <p class="text-text-tertiary text-sm">--color-bg-tertiary</p>
-                </div>
-              </div>
-              <div class="flex items-center">
-                <div class="w-16 h-16 bg-bg-accent rounded-lg shadow-sm"></div>
-                <div class="ml-4">
-                  <p class="font-medium text-text-primary">Accent Background</p>
-                  <p class="text-text-tertiary text-sm">--color-bg-accent</p>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- Typography -->
+        <section class="mb-8">
+          <h2 class="text-xl font-semibold text-card-title mb-4">Typography</h2>
           
-          <!-- Text Colors -->
-          <div class="bg-bg-secondary rounded-lg p-4 shadow">
-            <h3 class="font-medium text-text-primary mb-3">Text Colors</h3>
-            <div class="space-y-3">
-              <div class="flex items-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-bg-tertiary rounded-lg">
-                  <span class="text-text-primary font-bold">Aa</span>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Headings -->
+            <div>
+              <h3 class="text-lg font-medium text-card-title mb-3">Headings</h3>
+              <div class="space-y-4 bg-card-bg p-6 rounded-lg border border-card-border h-full">
+                <div>
+                  <h1 class="text-4xl font-bold text-text-primary">Heading 1 (4xl)</h1>
+                  <p class="text-sm text-text-tertiary mt-1">Font size: var(--font-size-4xl)</p>
                 </div>
-                <div class="ml-4">
-                  <p class="font-medium text-text-primary">Primary Text</p>
-                  <p class="text-text-tertiary text-sm">--color-text-primary</p>
+                <div>
+                  <h2 class="text-3xl font-bold text-text-primary">Heading 2 (3xl)</h2>
+                  <p class="text-sm text-text-tertiary mt-1">Font size: var(--font-size-3xl)</p>
+                </div>
+                <div>
+                  <h3 class="text-2xl font-semibold text-text-primary">Heading 3 (2xl)</h3>
+                  <p class="text-sm text-text-tertiary mt-1">Font size: var(--font-size-2xl)</p>
+                </div>
+                <div>
+                  <h4 class="text-xl font-semibold text-text-primary">Heading 4 (xl)</h4>
+                  <p class="text-sm text-text-tertiary mt-1">Font size: var(--font-size-xl)</p>
+                </div>
+                <div>
+                  <h5 class="text-lg font-medium text-text-primary">Heading 5 (lg)</h5>
+                  <p class="text-sm text-text-tertiary mt-1">Font size: var(--font-size-lg)</p>
+                </div>
+                <div>
+                  <h6 class="text-base font-medium text-text-primary">Heading 6 (base)</h6>
+                  <p class="text-sm text-text-tertiary mt-1">Font size: var(--font-size-base)</p>
                 </div>
               </div>
-              <div class="flex items-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-bg-tertiary rounded-lg">
-                  <span class="text-text-secondary font-bold">Aa</span>
+            </div>
+            
+            <!-- Text Styles -->
+            <div>
+              <h3 class="text-lg font-medium text-card-title mb-3">Text Styles</h3>
+              <div class="space-y-4 bg-card-bg p-6 rounded-lg border border-card-border h-full">
+                <div>
+                  <p class="text-base text-text-primary">Base text (normal)</p>
+                  <p class="text-sm text-text-tertiary mt-1">Font size: var(--font-size-base)</p>
                 </div>
-                <div class="ml-4">
-                  <p class="font-medium text-text-primary">Secondary Text</p>
-                  <p class="text-text-tertiary text-sm">--color-text-secondary</p>
+                <div>
+                  <p class="text-sm text-text-primary">Small text (sm)</p>
+                  <p class="text-xs text-text-tertiary mt-1">Font size: var(--font-size-sm)</p>
                 </div>
-              </div>
-              <div class="flex items-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-bg-tertiary rounded-lg">
-                  <span class="text-text-tertiary font-bold">Aa</span>
+                <div>
+                  <p class="text-xs text-text-primary">Extra small text (xs)</p>
+                  <p class="text-xs text-text-tertiary mt-1">Font size: var(--font-size-xs)</p>
                 </div>
-                <div class="ml-4">
-                  <p class="font-medium text-text-primary">Tertiary Text</p>
-                  <p class="text-text-tertiary text-sm">--color-text-tertiary</p>
+                <div>
+                  <p class="text-base font-bold text-text-primary">Bold text</p>
+                  <p class="text-xs text-text-tertiary mt-1">font-weight: var(--font-weight-bold)</p>
                 </div>
-              </div>
-              <div class="flex items-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-bg-tertiary rounded-lg">
-                  <span class="text-text-accent font-bold">Aa</span>
+                <div>
+                  <p class="text-base italic text-text-primary">Italic text</p>
                 </div>
-                <div class="ml-4">
-                  <p class="font-medium text-text-primary">Accent Text</p>
-                  <p class="text-text-tertiary text-sm">--color-text-accent</p>
+                <div>
+                  <p class="text-base underline text-text-primary">Underlined text</p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <!-- Component Tokens -->
-      <div>
-        <h2 class="text-xl font-semibold mb-4 text-text-primary">Component Tokens</h2>
-        <p class="mb-6 text-text-secondary">These tokens are used for specific UI components throughout the application.</p>
+        </section>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Button Examples -->
-          <div class="bg-bg-secondary rounded-lg p-4 shadow">
-            <h3 class="font-medium text-text-primary mb-3">Button Colors</h3>
-            <div class="space-y-4">
-              <div>
-                <p class="font-medium text-text-primary mb-2">Primary Button</p>
-                <button class="px-4 py-2 bg-primary text-text-on-primary rounded-md hover:bg-primary-hover active:bg-primary-active transition-colors">
+        <!-- Buttons -->
+        <section class="mb-8">
+          <h2 class="text-xl font-semibold text-card-title mb-4">Buttons</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Primary Buttons -->
+            <div>
+              <h3 class="text-lg font-medium text-card-title mb-3">Primary Buttons</h3>
+              <div class="flex flex-col gap-4 bg-card-bg p-6 rounded-lg border border-card-border h-full">
+                <button class="bg-primary hover:bg-primary-hover text-text-on-primary px-4 py-2 rounded-md">
                   Primary Button
                 </button>
+                <button class="bg-primary hover:bg-primary-hover text-text-on-primary px-4 py-2 rounded-md" disabled>
+                  Disabled
+                </button>
+                <button type="button" class="bg-primary hover:bg-primary-hover text-text-on-primary px-4 py-2 rounded-md inline-flex items-center">
+                  <span x-html="$icon('plus', 'w-4 h-4 mr-2')" aria-hidden="true"></span>
+                  With Icon
+                </button>
               </div>
-              <div>
-                <p class="font-medium text-text-primary mb-2">Secondary Button</p>
-                <button class="px-4 py-2 border border-primary bg-transparent text-primary rounded-md hover:bg-primary-muted hover:text-primary-hover active:text-primary-active transition-colors">
+            </div>
+            
+            <!-- Secondary Buttons -->
+            <div>
+              <h3 class="text-lg font-medium text-card-title mb-3">Secondary Buttons</h3>
+              <div class="flex flex-col gap-4 bg-card-bg p-6 rounded-lg border border-card-border h-full">
+                <button class="bg-bg-secondary border border-primary text-primary hover:bg-primary-muted px-4 py-2 rounded-md">
                   Secondary Button
                 </button>
+                <button class="bg-bg-secondary border border-border text-text-tertiary px-4 py-2 rounded-md" disabled>
+                  Disabled
+                </button>
+                <button type="button" class="bg-bg-secondary border border-primary text-primary hover:bg-primary-muted px-4 py-2 rounded-md inline-flex items-center">
+                  <span x-html="$icon('plus', 'w-4 h-4 mr-2')" aria-hidden="true"></span>
+                  With Icon
+                </button>
               </div>
-              <div>
-                <p class="font-medium text-text-primary mb-2">Tertiary Button</p>
-                <button class="px-4 py-2 bg-transparent text-text-secondary rounded-md hover:bg-bg-tertiary hover:text-text-primary transition-colors">
-                  Tertiary Button
+            </div>
+            
+            <!-- Text Buttons -->
+            <div>
+              <h3 class="text-lg font-medium text-card-title mb-3">Text Buttons</h3>
+              <div class="flex flex-col gap-4 bg-card-bg p-6 rounded-lg border border-card-border h-full">
+                <button class="text-primary hover:text-primary-hover px-4 py-2 rounded-md">
+                  Text Button
+                </button>
+                <button class="text-text-tertiary px-4 py-2 rounded-md" disabled>
+                  Disabled
+                </button>
+                <button type="button" class="text-primary hover:text-primary-hover px-4 py-2 rounded-md inline-flex items-center">
+                  <span x-html="$icon('plus', 'w-4 h-4 mr-2')" aria-hidden="true"></span>
+                  With Icon
                 </button>
               </div>
             </div>
           </div>
+        </section>
+        
+        <!-- Forms -->
+        <section class="mb-8">
+          <h2 class="text-xl font-semibold text-card-title mb-4">Form Elements</h2>
           
-          <!-- Feedback Components -->
-          <div class="bg-bg-secondary rounded-lg p-4 shadow">
-            <h3 class="font-medium text-text-primary mb-3">Feedback Components</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Text Inputs -->
+            <div>
+              <h3 class="text-lg font-medium text-card-title mb-3">Text Inputs</h3>
+              <div class="space-y-4 bg-card-bg p-6 rounded-lg border border-card-border h-full">
+                <div>
+                  <label for="default-input" class="block mb-2 text-sm font-medium text-text-primary">Default Input</label>
+                  <input type="text" id="default-input" class="bg-bg-secondary border border-border text-text-primary text-sm rounded-md focus:ring-focus-ring focus:border-focus px-3 py-2 w-full">
+                </div>
+                <div>
+                  <label for="disabled-input" class="block mb-2 text-sm font-medium text-text-primary">Disabled Input</label>
+                  <input type="text" id="disabled-input" class="bg-bg-tertiary border border-border text-text-tertiary text-sm rounded-md px-3 py-2 w-full" disabled>
+                </div>
+                <div>
+                  <label for="error-input" class="block mb-2 text-sm font-medium text-danger">Error Input</label>
+                  <input type="text" id="error-input" class="bg-bg-secondary border border-danger text-text-primary text-sm rounded-md focus:ring-danger focus:border-danger px-3 py-2 w-full">
+                  <p class="mt-1 text-sm text-danger">Error message goes here</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-6">
+              <!-- Select -->
+              <div>
+                <h3 class="text-lg font-medium text-card-title mb-3">Select</h3>
+                <div class="space-y-4 bg-card-bg p-6 rounded-lg border border-card-border">
+                  <div>
+                    <label for="default-select" class="block mb-2 text-sm font-medium text-text-primary">Default Select</label>
+                    <select id="default-select" class="bg-bg-secondary border border-border text-text-primary text-sm rounded-md focus:ring-focus-ring focus:border-focus px-3 py-2 w-full">
+                      <option selected>Choose an option</option>
+                      <option value="1">Option 1</option>
+                      <option value="2">Option 2</option>
+                      <option value="3">Option 3</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label for="disabled-select" class="block mb-2 text-sm font-medium text-text-primary">Disabled Select</label>
+                    <select id="disabled-select" class="bg-bg-tertiary border border-border text-text-tertiary text-sm rounded-md px-3 py-2 w-full" disabled>
+                      <option selected>Choose an option</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Checkbox & Radio -->
+              <div>
+                <h3 class="text-lg font-medium text-card-title mb-3">Checkbox & Radio</h3>
+                <div class="space-y-4 bg-card-bg p-6 rounded-lg border border-card-border">
+                  <div class="flex items-center">
+                    <input id="default-checkbox" type="checkbox" class="w-4 h-4 text-primary bg-bg-secondary border-border rounded focus:ring-focus-ring">
+                    <label for="default-checkbox" class="ml-2 text-sm font-medium text-text-primary">Default checkbox</label>
+                  </div>
+                  <div class="flex items-center">
+                    <input id="disabled-checkbox" type="checkbox" class="w-4 h-4 text-primary bg-bg-tertiary border-border rounded focus:ring-focus-ring" disabled>
+                    <label for="disabled-checkbox" class="ml-2 text-sm font-medium text-text-tertiary">Disabled checkbox</label>
+                  </div>
+                  <div class="flex items-center">
+                    <input id="default-radio" type="radio" name="radio-group" class="w-4 h-4 text-primary bg-bg-secondary border-border focus:ring-focus-ring">
+                    <label for="default-radio" class="ml-2 text-sm font-medium text-text-primary">Default radio</label>
+                  </div>
+                  <div class="flex items-center">
+                    <input id="disabled-radio" type="radio" name="radio-group" class="w-4 h-4 text-primary bg-bg-tertiary border-border focus:ring-focus-ring" disabled>
+                    <label for="disabled-radio" class="ml-2 text-sm font-medium text-text-tertiary">Disabled radio</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Cards -->
+        <section class="mb-8">
+          <h2 class="text-xl font-semibold text-card-title mb-4">Cards</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Basic Card -->
+            <div class="bg-card-bg rounded-lg shadow-md border border-card-border overflow-hidden h-full">
+              <div class="p-5">
+                <h3 class="text-lg font-medium text-card-title mb-2">Basic Card</h3>
+                <p class="text-text-secondary">This is a basic card with a simple header and body content.</p>
+              </div>
+            </div>
+            
+            <!-- Card with Header -->
+            <div class="bg-card-bg rounded-lg shadow-md border border-card-border overflow-hidden h-full">
+              <div class="px-6 py-4 border-b border-card-border">
+                <h3 class="text-lg font-semibold text-card-title">Card with Header</h3>
+              </div>
+              <div class="p-5">
+                <p class="text-text-secondary">This card has a separate header section with a border.</p>
+              </div>
+            </div>
+            
+            <!-- Card with Footer -->
+            <div class="bg-card-bg rounded-lg shadow-md border border-card-border overflow-hidden flex flex-col h-full">
+              <div class="p-5 flex-grow">
+                <h3 class="text-lg font-medium text-card-title mb-2">Card with Footer</h3>
+                <p class="text-text-secondary">This card includes a footer with background color.</p>
+              </div>
+              <div class="px-5 py-3 bg-bg-tertiary border-t border-card-border text-sm text-text-tertiary mt-auto">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-medium">Card Footer</span>
+                  <button class="text-primary hover:text-primary-hover text-xs font-medium">Action</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+        <!-- Alerts -->
+        <section class="mb-8">
+          <h2 class="text-xl font-semibold text-card-title mb-4">Alerts</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="space-y-4">
-              <div class="p-3 bg-info-muted text-info rounded-md border border-info">
-                <p class="font-medium">Info Alert</p>
-                <p class="text-sm">This is an informational message.</p>
+              <!-- Info Alert -->
+              <div class="flex p-4 text-info bg-info-muted rounded-lg border border-info" role="alert">
+                <span x-html="$icon('infoCircle', 'w-5 h-5 mr-2 flex-shrink-0')"></span>
+                <div>
+                  <span class="font-medium">Info alert!</span> This is an informational message.
+                </div>
               </div>
-              <div class="p-3 bg-success-muted text-success rounded-md border border-success">
-                <p class="font-medium">Success Alert</p>
-                <p class="text-sm">Operation completed successfully.</p>
-              </div>
-              <div class="p-3 bg-warning-muted text-warning rounded-md border border-warning">
-                <p class="font-medium">Warning Alert</p>
-                <p class="text-sm">Proceed with caution.</p>
-              </div>
-              <div class="p-3 bg-danger-muted text-danger rounded-md border border-danger">
-                <p class="font-medium">Error Alert</p>
-                <p class="text-sm">Something went wrong.</p>
+              
+              <!-- Success Alert -->
+              <div class="flex p-4 text-success bg-success-muted rounded-lg border border-success" role="alert">
+                <span x-html="$icon('checkCircle', 'w-5 h-5 mr-2 flex-shrink-0')"></span>
+                <div>
+                  <span class="font-medium">Success alert!</span> Operation completed successfully.
+                </div>
               </div>
             </div>
-          </div>
-          
-          <!-- Border & Shadow -->
-          <div class="bg-bg-secondary rounded-lg p-4 shadow">
-            <h3 class="font-medium text-text-primary mb-3">Borders</h3>
+
             <div class="space-y-4">
-              <div class="flex items-center justify-between">
-                <div class="p-3 border border-border bg-bg-secondary rounded w-24 h-16 text-center">Default</div>
-                <div class="p-3 border border-border-hover bg-bg-secondary rounded w-24 h-16 text-center">Hover</div>
-                <div class="p-3 border border-border-focus bg-bg-secondary rounded w-24 h-16 text-center">Focus</div>
-                <div class="p-3 border border-divider bg-bg-secondary rounded w-24 h-16 text-center">Divider</div>
+              <!-- Warning Alert -->
+              <div class="flex p-4 text-warning bg-warning-muted rounded-lg border border-warning" role="alert">
+                <span x-html="$icon('exclamationCircle', 'w-5 h-5 mr-2 flex-shrink-0')"></span>
+                <div>
+                  <span class="font-medium">Warning alert!</span> Proceed with caution.
+                </div>
+              </div>
+              
+              <!-- Error Alert -->
+              <div class="flex p-4 text-danger bg-danger-muted rounded-lg border border-danger" role="alert">
+                <span x-html="$icon('xCircle', 'w-5 h-5 mr-2 flex-shrink-0')"></span>
+                <div>
+                  <span class="font-medium">Error alert!</span> Something went wrong.
+                </div>
               </div>
             </div>
           </div>
+        </section>
+        
+        <!-- Badges -->
+        <section class="mb-8">
+          <h2 class="text-xl font-semibold text-card-title mb-4">Badges</h2>
           
-          <!-- Card Examples -->
-          <div class="bg-bg-secondary rounded-lg p-4 shadow">
-            <h3 class="font-medium text-text-primary mb-3">Card Examples</h3>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="p-3 border border-border bg-bg-secondary rounded shadow">
-                <h4 class="font-medium text-text-primary mb-1">Default Card</h4>
-                <p class="text-text-secondary text-xs">Uses background & border tokens</p>
-              </div>
-              <div class="p-3 border border-primary-muted bg-primary-muted rounded shadow">
-                <h4 class="font-medium text-primary mb-1">Primary Card</h4>
-                <p class="text-text-secondary text-xs">Uses primary tokens</p>
-              </div>
-              <div class="p-3 border border-secondary-muted bg-secondary-muted rounded shadow">
-                <h4 class="font-medium text-secondary mb-1">Secondary Card</h4>
-                <p class="text-text-secondary text-xs">Uses secondary tokens</p>
-              </div>
-              <div class="p-3 border border-accent-muted bg-accent-muted rounded shadow">
-                <h4 class="font-medium text-accent mb-1">Accent Card</h4>
-                <p class="text-text-secondary text-xs">Uses accent tokens</p>
-              </div>
+          <div class="bg-card-bg rounded-lg shadow-md border border-card-border p-6">
+            <div class="flex flex-wrap gap-4">
+              <!-- Default Badge -->
+              <span class="bg-bg-tertiary text-text-secondary text-xs font-medium px-2.5 py-0.5 rounded-full">Default</span>
+              
+              <!-- Primary Badge -->
+              <span class="bg-primary-muted text-primary text-xs font-medium px-2.5 py-0.5 rounded-full">Primary</span>
+              
+              <!-- Success Badge -->
+              <span class="bg-success-muted text-success text-xs font-medium px-2.5 py-0.5 rounded-full">Success</span>
+              
+              <!-- Warning Badge -->
+              <span class="bg-warning-muted text-warning text-xs font-medium px-2.5 py-0.5 rounded-full">Warning</span>
+              
+              <!-- Danger Badge -->
+              <span class="bg-danger-muted text-danger text-xs font-medium px-2.5 py-0.5 rounded-full">Danger</span>
+              
+              <!-- Info Badge -->
+              <span class="bg-info-muted text-info text-xs font-medium px-2.5 py-0.5 rounded-full">Info</span>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
-  </div>
+    </div>
+  </main>
 
   <!-- Toast/Notification Component -->
-  <div x-data="notification()"
-       x-init="setTimeout(() => show('Welcome to the Style Guide! Explore our design token system.', 'info'), 1000)"
+  <div x-data="{ 
+          visible: false, 
+          message: '',
+          type: 'info',
+          show(message, type = 'info', duration = 3000) {
+            this.visible = true;
+            this.message = message;
+            this.type = type;
+            
+            if (this.timeout) {
+              clearTimeout(this.timeout);
+            }
+            
+            this.timeout = setTimeout(() => {
+              this.hide();
+            }, duration);
+          },
+          hide() {
+            this.visible = false;
+          }
+       }"
        x-show="visible"
        @click="hide()"
-       class="fixed bottom-4 right-4 z-50 flex items-center p-4 max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 transition-all duration-300 ease-in-out"
+       x-transition:enter="transition ease-out duration-200"
+       x-transition:enter-start="opacity-0 transform translate-y-2"
+       x-transition:enter-end="opacity-100 transform translate-y-0"
+       x-transition:leave="transition ease-in duration-150"
+       x-transition:leave-start="opacity-100 transform translate-y-0"
+       x-transition:leave-end="opacity-0 transform translate-y-2"
+       class="fixed bottom-4 right-4 z-50 flex items-center p-4 max-w-xs border rounded-lg shadow-md transition-all duration-300 ease-in-out"
        :class="{
-         'text-gray-500 bg-white dark:text-gray-400 dark:bg-gray-800': type === 'info',
-         'text-green-500 bg-green-50 dark:text-green-400 dark:bg-gray-800': type === 'success',
-         'text-yellow-500 bg-yellow-50 dark:text-yellow-400 dark:bg-gray-800': type === 'warning',
-         'text-red-500 bg-red-50 dark:text-red-400 dark:bg-gray-800': type === 'error'
+         'text-text-tertiary bg-bg-secondary border-border': type === 'info',
+         'text-success bg-success-muted border-success': type === 'success',
+         'text-warning bg-warning-muted border-warning': type === 'warning',
+         'text-danger bg-danger-muted border-danger': type === 'error'
        }"
        role="alert">
+    <!-- Show a success notification when the page loads -->
+    <div x-init="setTimeout(() => show('Welcome to the Style Guide!', 'success'), 1000)"></div>
+    
     <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 rounded-lg me-3"
          :class="{
-           'text-blue-500 bg-blue-100 dark:bg-blue-900 dark:text-blue-300': type === 'info',
-           'text-green-500 bg-green-100 dark:bg-green-900 dark:text-green-300': type === 'success',
-           'text-yellow-500 bg-yellow-100 dark:bg-yellow-900 dark:text-yellow-300': type === 'warning',
-           'text-red-500 bg-red-100 dark:bg-red-900 dark:text-red-300': type === 'error'
+           'text-info bg-info-muted': type === 'info',
+           'text-success bg-success-muted': type === 'success',
+           'text-warning bg-warning-muted': type === 'warning',
+           'text-danger bg-danger-muted': type === 'error'
          }">
       <span  x-init="
         const icons = {
@@ -647,8 +802,8 @@
         $el.innerHTML = icons[type];
       "></span>
     </div>
-    <div class="ml-3 text-sm font-normal" x-text="message"></div>
-    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"  x-html="$icon('x', 'w-3 h-3')">
+    <div class="ml-3 text-sm font-normal text-text-primary" x-text="message"></div>
+    <button type="button" class="ml-auto -mx-1.5 -my-1.5 text-text-tertiary hover:text-text-primary rounded-lg focus:ring-2 focus:ring-focus-ring p-1.5 hover:bg-bg-tertiary inline-flex items-center justify-center h-8 w-8"  x-html="$icon('x', 'w-3 h-3')">
       <span class="sr-only">Close</span>
     </button>
   </div>
