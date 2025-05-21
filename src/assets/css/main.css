@@ -382,6 +382,13 @@
     @apply bg-[color:var(--color-sidebar-item-active)]
            text-[color:var(--color-sidebar-item-active-text)];
   }
+  
+  /* Sidebar link component for nested menu items */
+  .sidebar-link {
+    @apply flex items-center p-2 pl-11 text-sidebar-text 
+           rounded-lg hover:bg-sidebar-hover
+           transition duration-75;
+  }
 
   /* Navigation */
   .navbar {
