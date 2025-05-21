@@ -363,9 +363,7 @@
 
   /* Sidebar */
   .sidebar {
-    @apply bg-[color:var(--color-sidebar-bg)]
-           text-[color:var(--color-sidebar-text)]
-           border-r border-[color:var(--color-sidebar-border)];
+    @apply bg-sidebar-bg text-sidebar-text border-sidebar-border;
   }
 
   .sidebar-item {
@@ -377,7 +375,7 @@
   /* Add the group class directly in HTML instead of through @apply */
 
   .sidebar-item:hover {
-    @apply bg-[color:var(--color-sidebar-item-hover)];
+    @apply bg-sidebar-hover;
   }
 
   .sidebar-item.active {

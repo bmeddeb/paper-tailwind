@@ -34,7 +34,7 @@ module.exports = {
           active: 'var(--color-accent-active)',
           muted: 'var(--color-accent-muted)',
         },
-        
+
         // Background colors
         bg: {
           primary: 'var(--color-bg-primary)',
@@ -42,7 +42,7 @@ module.exports = {
           tertiary: 'var(--color-bg-tertiary)',
           accent: 'var(--color-bg-accent)',
         },
-        
+
         // Text colors
         text: {
           primary: 'var(--color-text-primary)',
@@ -52,7 +52,7 @@ module.exports = {
           'on-primary': 'var(--color-text-on-primary)',
           'on-accent': 'var(--color-text-on-accent)',
         },
-        
+
         // UI feedback colors
         success: {
           DEFAULT: 'var(--color-success)',
@@ -74,7 +74,7 @@ module.exports = {
           hover: 'var(--color-info-hover)',
           muted: 'var(--color-info-muted)',
         },
-        
+
         // UI element colors
         border: {
           DEFAULT: 'var(--color-border)',
@@ -82,8 +82,14 @@ module.exports = {
           focus: 'var(--color-border-focus)',
         },
         divider: 'var(--color-divider)',
+        sidebar: {
+          bg:    'var(--color-sidebar-bg)',
+          text:  'var(--color-sidebar-text)',
+          hover: 'var(--color-sidebar-hover)',
+          border:'var(--color-sidebar-border)',
+        },
       },
-      
+
       // Spacing system
       spacing: {
         xs: 'var(--spacing-xs)',
@@ -94,7 +100,7 @@ module.exports = {
         '2xl': 'var(--spacing-2xl)',
         '3xl': 'var(--spacing-3xl)',
       },
-      
+
       // Typography
       fontSize: {
         xs: 'var(--font-size-xs)',
@@ -126,7 +132,7 @@ module.exports = {
         normal: 'var(--letter-spacing-normal)',
         wide: 'var(--letter-spacing-wide)',
       },
-      
+
       // Border radius
       borderRadius: {
         none: 'var(--radius-none)',
@@ -137,7 +143,7 @@ module.exports = {
         '2xl': 'var(--radius-2xl)',
         full: 'var(--radius-full)',
       },
-      
+
       // Border widths
       borderWidth: {
         none: 'var(--border-width-none)',
@@ -145,7 +151,7 @@ module.exports = {
         thick: 'var(--border-width-thick)',
         thicker: 'var(--border-width-thicker)',
       },
-      
+
       // Box shadows
       boxShadow: {
         sm: 'var(--shadow-sm)',
@@ -157,7 +163,7 @@ module.exports = {
         focus: 'var(--shadow-focus)',
         none: 'none',
       },
-      
+
       // Transitions
       transitionDuration: {
         fast: 'var(--transition-fast)',

@@ -7,160 +7,102 @@
   <link rel="stylesheet" href="/dist/style.css">
 
 </head>
-<body x-data="{ sidebarOpen: true }">
+<body x-data="{ sidebarOpen: true, sidebarCollapsed: false }">
 
   <!-- Sidebar -->
-  <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-300 ease-in-out bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700" aria-label="Sidebar">
-    <div class="h-full px-3 py-4 overflow-y-auto bg-white dark:bg-gray-800">
-      <div class="flex items-center justify-between mb-5 px-2">
-        <h2 class="text-xl font-semibold dark:text-white">Dashboard</h2>
-        <button @click="sidebarOpen = !sidebarOpen" type="button" class="lg:hidden text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+  <aside id="default-sidebar" class="fixed top-0 left-0 z-40 h-screen overflow-y-auto py-5 px-3 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform -translate-x-full sm:translate-x-0" :class="sidebarCollapsed ? 'w-[54px]' : 'w-64'" aria-label="Sidenav">
+    <ul class="space-y-2">
+      <!-- Pages Section -->
+      <li x-data="{ open: false }">
+        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+          <span x-html="$icon('document','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
+          <span class="flex-1 ml-3 text-left whitespace-nowrap">Pages</span>
+          <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
         </button>
-      </div>
-
-      <ul class="space-y-2">
-        <!-- Pages Section -->
-        <li x-data="{ open: false }">
-          <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
-            <!-- Using the iconHelper component -->
-            <span x-html="$icon('document')"></span>
-            <span class="ml-3">Pages</span>
-            <!-- Chevron icon using the iconHelper -->
-            <span class="ml-auto" x-html="$icon('chevronDown', open ? 'rotate-180' : '')"></span>
-          </button>
-          <ul x-show="open" class="py-2 space-y-2">
-            <!-- TODO: replace with {% url 'timeline' %} -->
-            <li><a href="/src/templates/timeline.html" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Timeline</a></li>
-            <!-- TODO: replace with {% url 'tables' %} -->
-            <li><a href="/src/templates/table.html" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Tables</a></li>
-            <!-- TODO: replace with {% url 'login' %} -->
-            <li><a href="/src/templates/login.html" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Login</a></li>
-            <!-- TODO: replace with {% url 'logout' %} -->
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a></li>
-            <!-- TODO: replace with {% url 'register' %} -->
-            <li><a href="/src/templates/register.html" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Register</a></li>
-            <!-- TODO: replace with {% url 'profile' %} -->
-            <li><a href="/src/templates/profile.html" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a></li>
-            <!-- TODO: replace with {% url 'blog' %} -->
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Blog</a></li>
-          </ul>
-        </li>
-
-        <!-- Components Section -->
-        <li x-data="{ open: false }">
-          <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
-            <!-- Using the iconHelper component -->
-            <span x-html="$icon('puzzle')"></span>
-            <span class="ml-3">Components</span>
-            <!-- Chevron icon using the iconHelper -->
-            <span class="ml-auto" x-html="$icon('chevronDown', open ? 'rotate-180' : '')"></span>
-          </button>
-          <ul x-show="open" class="py-2 space-y-2">
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Buttons</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Cards</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Modals</a></li>
-          </ul>
-        </li>
-
-        <!-- Forms Section -->
-        <li x-data="{ open: false }">
-          <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
-            <span x-html="$icon('clipboard')"></span>
-            <span class="ml-3">Forms</span>
-            <span class="ml-auto" x-html="$icon('chevronDown', open ? 'rotate-180' : '')"></span>
-          </button>
-          <ul x-show="open" class="py-2 space-y-2">
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Input Fields</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Select</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Checkbox</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Radio</a></li>
-          </ul>
-        </li>
-
-        <!-- Tables Section -->
-        <li x-data="{ open: false }">
-          <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
-            <!-- Using the iconHelper component -->
-            <span x-html="$icon('table')"></span>
-            <span class="ml-3">Tables</span>
-            <!-- Chevron icon using the iconHelper -->
-            <span class="ml-auto" x-html="$icon('chevronDown', open ? 'rotate-180' : '')"></span>
-          </button>
-          <ul x-show="open" class="py-2 space-y-2">
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Basic Table</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Sortable Table</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Data Table</a></li>
-          </ul>
-        </li>
-
-        <!-- Widgets Section -->
-        <li x-data="{ open: false }">
-          <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
-            <!-- Using the iconHelper component -->
-            <span x-html="$icon('squares')"></span>
-            <span class="ml-3">Widgets</span>
-            <!-- Chevron icon using the iconHelper -->
-            <span class="ml-auto" x-html="$icon('chevronDown', open ? 'rotate-180' : '')"></span>
-          </button>
-          <ul x-show="open" class="py-2 space-y-2">
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Stats</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Cards</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Progress</a></li>
-          </ul>
-        </li>
-
-        <!-- Charts Section -->
-        <li x-data="{ open: false }">
-          <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
-            <!-- Using the iconHelper component -->
-            <span x-html="$icon('chartBar')"></span>
-            <span class="ml-3">Charts</span>
-            <!-- Chevron icon using the iconHelper -->
-            <span class="ml-auto" x-html="$icon('chevronDown', open ? 'rotate-180' : '')"></span>
-          </button>
-          <ul x-show="open" class="py-2 space-y-2">
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Line Chart</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Bar Chart</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Pie Chart</a></li>
-          </ul>
-        </li>
-
-        <!-- Calendar Section -->
-        <li x-data="{ open: false }">
-          <button @click="open = !open" type="button" class="flex items-center w-full p-2 text-base text-gray-900 dark:text-white transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700">
-            <!-- Using the iconHelper component -->
-            <span x-html="$icon('calendar')"></span>
-            <span class="ml-3">Calendar</span>
-            <!-- Chevron icon using the iconHelper -->
-            <span class="ml-auto" x-html="$icon('chevronDown', open ? 'rotate-180' : '')"></span>
-          </button>
-          <ul x-show="open" class="py-2 space-y-2">
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Monthly</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Weekly</a></li>
-            <li><a href="#" class="flex items-center w-full p-2 text-gray-900 dark:text-gray-300 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:hover:bg-gray-700">Daily</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+        <ul x-show="open" x-cloak class="py-2 space-y-2">
+          <li><a href="/src/templates/timeline.html" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Timeline</a></li>
+          <li><a href="/src/templates/table.html" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Tables</a></li>
+          <li><a href="/src/templates/login.html" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Login</a></li>
+          <li><a href="/src/templates/register.html" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Register</a></li>
+          <li><a href="/src/templates/profile.html" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Profile</a></li>
+        </ul>
+      </li>
+      <!-- Forms Section -->
+      <li x-data="{ open: false }">
+        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+          <span x-html="$icon('clipboard','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
+          <span class="flex-1 ml-3 text-left whitespace-nowrap">Forms</span>
+          <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+        <ul x-show="open" x-cloak class="py-2 space-y-2">
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Input Fields</a></li>
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Select</a></li>
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Checkbox</a></li>
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Radio</a></li>
+        </ul>
+      </li>
+      <!-- Tables Section -->
+      <li x-data="{ open: false }">
+        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+          <span x-html="$icon('table','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
+          <span class="flex-1 ml-3 text-left whitespace-nowrap">Tables</span>
+          <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+        <ul x-show="open" x-cloak class="py-2 space-y-2">
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Basic Table</a></li>
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Sortable Table</a></li>
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Data Table</a></li>
+        </ul>
+      </li>
+      <!-- Charts Section -->
+      <li x-data="{ open: false }">
+        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+          <span x-html="$icon('chartBar','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
+          <span class="flex-1 ml-3 text-left whitespace-nowrap">Charts</span>
+          <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+        <ul x-show="open" x-cloak class="py-2 space-y-2">
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Line Chart</a></li>
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Bar Chart</a></li>
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Pie Chart</a></li>
+        </ul>
+      </li>
+      <!-- Calendar Section -->
+      <li x-data="{ open: false }">
+        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+          <span x-html="$icon('calendar','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
+          <span class="flex-1 ml-3 text-left whitespace-nowrap">Calendar</span>
+          <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+        <ul x-show="open" x-cloak class="py-2 space-y-2">
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Monthly</a></li>
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Weekly</a></li>
+          <li><a href="#" class="flex items-center p-2 pl-11 text-gray-900 dark:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">Daily</a></li>
+        </ul>
+      </li>
+    </ul>
   </aside>
 
   <!-- Main content wrapper -->
-  <div class="min-h-screen transition-all duration-300 bg-gray-50 dark:!bg-gray-900 main-bg" :class="sidebarOpen ? 'lg:ml-64' : 'lg:ml-0'">
+  <div class="min-h-screen transition-all duration-300 bg-gray-50 dark:!bg-gray-900 main-bg" :class="sidebarCollapsed ? 'lg:ml-[54px]' : 'lg:ml-64'">
     <!-- Main content -->
     <div class="p-4">
     <!-- Navbar -->
     <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2.5 mb-5 flex items-center justify-between">
       <div class="flex items-center">
-        <button @click="sidebarOpen = !sidebarOpen"
-                data-drawer-target="default-sidebar"
-                data-drawer-toggle="default-sidebar"
-                aria-controls="default-sidebar"
-                type="button"
-                class="inline-flex items-center p-2 text-sm text-gray-500 dark:text-gray-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600"
-                >
+        <button @click="sidebarCollapsed = !sidebarCollapsed" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 dark:text-gray-400 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600">
           <span class="sr-only">Toggle sidebar</span>
-          <span x-html="sidebarOpen ? $icon('menuLeft', 'w-6 h-6') : $icon('menuRight', 'w-6 h-6')"></span>
+          <span x-html="sidebarCollapsed ? $icon('menuRight', 'w-6 h-6') : $icon('menuLeft', 'w-6 h-6')"></span>
         </button>
         <span class="self-center text-xl font-semibold whitespace-nowrap ml-2 dark:text-white">Dashboard</span>
       </div>
