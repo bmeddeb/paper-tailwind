@@ -1,11 +1,28 @@
 <!DOCTYPE html>
+<!--
+  Base Template
+  
+  How to use this template:
+  1. Copy this file to create a new page
+  2. Rename it appropriately (e.g., my-new-page.html)
+  3. Update the <title> tag and navbar title
+  4. Replace the content in the "Page Content" section
+  5. Add any page-specific styles or scripts in the designated areas
+  
+  This template includes:
+  - Sidebar with navigation (collapsible)
+  - Navbar with theme controls and user menu
+  - Toast/notification system
+  - Dark/light mode support
+  - White label theme selector
+-->
 <html lang="en" x-data="themeController()" :class="{ 'dark': isTheme('dark') }" x-init="initTheme()">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dashboard</title>
+  <title>Page Title</title>
   <link rel="stylesheet" href="/dist/style.css">
-
+  <!-- Add any additional page-specific styles or scripts here -->
 </head>
 <body x-data="{ sidebarOpen: true, sidebarCollapsed: false }">
 
@@ -125,7 +142,7 @@
           <span class="sr-only">Toggle sidebar</span>
           <span x-html="sidebarCollapsed ? $icon('menuRight', 'w-6 h-6') : $icon('menuLeft', 'w-6 h-6')"></span>
         </button>
-        <span class="self-center text-xl font-semibold whitespace-nowrap ml-2 dark:text-white">Dashboard</span>
+        <span class="self-center text-xl font-semibold whitespace-nowrap ml-2 dark:text-white">Page Title</span>
       </div>
 
       <div class="flex items-center gap-4">
@@ -244,141 +261,29 @@
       </div>
     </nav>
 
-    <!-- Dashboard Content -->
-    <div class="px-2">
-      <h1 class="text-2xl font-semibold mb-6 dark:text-white">Dashboard Overview</h1>
-
-      <!-- Stats Cards -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <!-- Total Views Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700">
-          <div class="flex items-center">
-            <div class="p-3 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-500 dark:text-blue-300"  x-html="$icon('eye', 'w-6 h-6')">
-              <!-- Icon placeholder -->
-            </div>
-            <div class="ml-3">
-              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Views</p>
-              <p class="text-lg font-semibold text-gray-900 dark:text-white">28.4K</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- New Users Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700">
-          <div class="flex items-center">
-            <div class="p-3 rounded-full bg-green-100 dark:bg-green-900 text-green-500 dark:text-green-300"  x-html="$icon('userPlus', 'w-6 h-6')">
-              <!-- Icon placeholder -->
-            </div>
-            <div class="ml-3">
-              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">New Users</p>
-              <p class="text-lg font-semibold text-gray-900 dark:text-white">2,340</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Favorites Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700">
-          <div class="flex items-center">
-            <div class="p-3 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-500 dark:text-yellow-300"  x-html="$icon('heart', 'w-6 h-6')">
-              <!-- Icon placeholder -->
-            </div>
-            <div class="ml-3">
-              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Favorites</p>
-              <p class="text-lg font-semibold text-gray-900 dark:text-white">1,247</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Reports Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700">
-          <div class="flex items-center">
-            <div class="p-3 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-500 dark:text-purple-300"  x-html="$icon('chartPie', 'w-6 h-6')">
-              <!-- Icon placeholder -->
-            </div>
-            <div class="ml-3">
-              <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Reports</p>
-              <p class="text-lg font-semibold text-gray-900 dark:text-white">74</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Main Content Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Chart -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700 lg:col-span-2 overflow-hidden">
-          <h2 class="text-lg font-semibold mb-4 dark:text-white">Traffic Overview</h2>
-          <div id="main-chart" class="h-80 overflow-hidden">
-            <!-- Placeholder for chart -->
-            <div class="flex items-center justify-center h-full bg-gray-50 dark:bg-gray-900 rounded">
-              <p class="text-gray-500 dark:text-gray-400">Chart will be loaded here</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Recent Activity -->
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border border-gray-200 dark:border-gray-700 overflow-hidden">
-          <h2 class="text-lg font-semibold mb-4 dark:text-white">Recent Activity</h2>
-          <div class="flow-root">
-            <ul class="divide-y divide-gray-200 dark:divide-gray-700">
-              <li class="py-3">
-                <div class="flex items-center space-x-4">
-                  <div class="flex-shrink-0">
-                    <img class="h-8 w-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" alt="User 1">
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-gray-900 dark:text-white truncate">John Doe</p>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Updated the dashboard</p>
-                  </div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">5m ago</div>
-                </div>
-              </li>
-              <li class="py-3">
-                <div class="flex items-center space-x-4">
-                  <div class="flex-shrink-0">
-                    <img class="h-8 w-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="User 2">
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-gray-900 dark:text-white truncate">Jane Smith</p>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Added new report</p>
-                  </div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">2h ago</div>
-                </div>
-              </li>
-              <li class="py-3">
-                <div class="flex items-center space-x-4">
-                  <div class="flex-shrink-0">
-                    <img class="h-8 w-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="User 3">
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-gray-900 dark:text-white truncate">Robert Johnson</p>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Commented on task</p>
-                  </div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">1d ago</div>
-                </div>
-              </li>
-              <li class="py-3">
-                <div class="flex items-center space-x-4">
-                  <div class="flex-shrink-0">
-                    <img class="h-8 w-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="User 4">
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="text-sm font-medium text-gray-900 dark:text-white truncate">Emily Davis</p>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 truncate">Created new task</p>
-                  </div>
-                  <div class="text-xs text-gray-500 dark:text-gray-400">3d ago</div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+    <!-- Page Content -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow mb-5">
+      <!-- 
+        Replace this section with your page-specific content
+        You can add multiple content blocks, cards, forms, etc.
+        This container has a white background with dark mode support 
+      -->
+      <h1 class="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">Page Title</h1>
+      <p class="text-gray-700 dark:text-gray-300">This is a blank template. Add your content here.</p>
+      
+      <!-- 
+        For example content layouts, see:
+        - Dashboard layout in home.html
+        - Data table layout in table.html
+        - Forms in login.html and register.html
+      -->
+    </div>
+    
     </div>
   </div>
 
   <!-- Toast/Notification Component -->
   <div x-data="notification()"
-       x-init="setTimeout(() => show('Welcome to the dashboard! Your stats have been updated.', 'success'), 1000)"
        x-show="visible"
        @click="hide()"
        class="fixed bottom-4 right-4 z-50 flex items-center p-4 max-w-xs text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800 transition-all duration-300 ease-in-out"
@@ -389,6 +294,10 @@
          'text-red-500 bg-red-50 dark:text-red-400 dark:bg-gray-800': type === 'error'
        }"
        role="alert">
+    <!-- To show a notification: 
+      x-init="setTimeout(() => show('Your message here', 'success'), 1000)"
+      Types: 'info', 'success', 'warning', 'error'
+    -->
     <div class="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 rounded-lg me-3"
          :class="{
            'text-blue-500 bg-blue-100 dark:bg-blue-900 dark:text-blue-300': type === 'info',

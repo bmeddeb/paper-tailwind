@@ -107,7 +107,7 @@
       <!-- Style Guide Section -->
       <li>
         <a href="/src/templates/style-guide.html" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-medium text-blue-600 dark:text-blue-400 rounded-lg transition duration-75 hover:bg-gray-100 dark:hover:bg-gray-700">
-          <span x-html="$icon('colorSwatch','w-6 h-6 text-blue-600 dark:text-blue-400')"></span>
+          <span x-html="$icon('swatch','w-6 h-6 text-blue-600 dark:text-blue-400')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Style Guide</span>
         </a>
       </li>
@@ -248,160 +248,107 @@
     <div class="px-2">
       <h1 class="text-2xl font-semibold mb-6 dark:text-white">Color Palette</h1>
       
-      <!-- Base Color Sections -->
+      <!-- Brand Color Sections -->
       <div class="mb-10">
-        <h2 class="text-xl font-semibold mb-4 dark:text-white">Base Colors</h2>
-        <p class="mb-6 text-gray-700 dark:text-gray-300">These are the raw color values defined in <code class="bg-gray-100 dark:bg-gray-700 px-1 py-0.5 rounded">variables.css</code>. They are not used directly in components but serve as the foundation for semantic tokens.</p>
+        <h2 class="text-xl font-semibold mb-4 text-text-primary">Brand Colors</h2>
+        <p class="mb-6 text-text-secondary">These are the semantic color tokens defined in <code class="bg-bg-tertiary px-1 py-0.5 rounded">variables.css</code> that change with themes. They provide meaningful abstractions for the UI.</p>
         
-        <!-- Gray Scale -->
+        <!-- Brand Primary Colors -->
         <div class="mb-8">
-          <h3 class="text-lg font-medium mb-3 dark:text-white">Gray Scale</h3>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-4">
+          <h3 class="text-lg font-medium mb-3 text-text-primary">Primary Colors</h3>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div class="flex flex-col">
-              <div class="h-20 bg-gray-50 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Gray 50</p>
-                <p class="text-gray-500 dark:text-gray-400">#f9fafb</p>
+              <div class="h-24 bg-primary rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Primary</p>
+                <p class="text-text-tertiary">--color-primary</p>
               </div>
             </div>
             <div class="flex flex-col">
-              <div class="h-20 bg-gray-100 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Gray 100</p>
-                <p class="text-gray-500 dark:text-gray-400">#f3f4f6</p>
+              <div class="h-24 bg-primary-hover rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Primary Hover</p>
+                <p class="text-text-tertiary">--color-primary-hover</p>
               </div>
             </div>
             <div class="flex flex-col">
-              <div class="h-20 bg-gray-200 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Gray 200</p>
-                <p class="text-gray-500 dark:text-gray-400">#e5e7eb</p>
+              <div class="h-24 bg-primary-active rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Primary Active</p>
+                <p class="text-text-tertiary">--color-primary-active</p>
               </div>
             </div>
             <div class="flex flex-col">
-              <div class="h-20 bg-gray-300 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Gray 300</p>
-                <p class="text-gray-500 dark:text-gray-400">#d1d5db</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-20 bg-gray-400 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Gray 400</p>
-                <p class="text-gray-500 dark:text-gray-400">#9ca3af</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-20 bg-gray-500 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Gray 500</p>
-                <p class="text-gray-500 dark:text-gray-400">#6b7280</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-20 bg-gray-600 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Gray 600</p>
-                <p class="text-gray-500 dark:text-gray-400">#4b5563</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-20 bg-gray-700 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Gray 700</p>
-                <p class="text-gray-500 dark:text-gray-400">#374151</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-20 bg-gray-800 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Gray 800</p>
-                <p class="text-gray-500 dark:text-gray-400">#1f2937</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-20 bg-gray-900 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Gray 900</p>
-                <p class="text-gray-500 dark:text-gray-400">#111827</p>
+              <div class="h-24 bg-primary-muted rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Primary Muted</p>
+                <p class="text-text-tertiary">--color-primary-muted</p>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Brand Colors -->
+        <!-- Secondary & Accent Colors -->
         <div class="mb-8">
-          <h3 class="text-lg font-medium mb-3 dark:text-white">Primary Color - Blue</h3>
-          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-4">
+          <h3 class="text-lg font-medium mb-3 text-text-primary">Secondary & Accent Colors</h3>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
             <div class="flex flex-col">
-              <div class="h-20 bg-blue-50 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Blue 50</p>
-                <p class="text-gray-500 dark:text-gray-400">#eff6ff</p>
+              <div class="h-24 bg-secondary rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Secondary</p>
+                <p class="text-text-tertiary">--color-secondary</p>
               </div>
             </div>
             <div class="flex flex-col">
-              <div class="h-20 bg-blue-100 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Blue 100</p>
-                <p class="text-gray-500 dark:text-gray-400">#dbeafe</p>
+              <div class="h-24 bg-secondary-hover rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Secondary Hover</p>
+                <p class="text-text-tertiary">--color-secondary-hover</p>
               </div>
             </div>
             <div class="flex flex-col">
-              <div class="h-20 bg-blue-200 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Blue 200</p>
-                <p class="text-gray-500 dark:text-gray-400">#bfdbfe</p>
+              <div class="h-24 bg-secondary-active rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Secondary Active</p>
+                <p class="text-text-tertiary">--color-secondary-active</p>
               </div>
             </div>
             <div class="flex flex-col">
-              <div class="h-20 bg-blue-300 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Blue 300</p>
-                <p class="text-gray-500 dark:text-gray-400">#93c5fd</p>
+              <div class="h-24 bg-secondary-muted rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Secondary Muted</p>
+                <p class="text-text-tertiary">--color-secondary-muted</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div class="flex flex-col">
+              <div class="h-24 bg-accent rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Accent</p>
+                <p class="text-text-tertiary">--color-accent</p>
               </div>
             </div>
             <div class="flex flex-col">
-              <div class="h-20 bg-blue-400 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Blue 400</p>
-                <p class="text-gray-500 dark:text-gray-400">#60a5fa</p>
+              <div class="h-24 bg-accent-hover rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Accent Hover</p>
+                <p class="text-text-tertiary">--color-accent-hover</p>
               </div>
             </div>
             <div class="flex flex-col">
-              <div class="h-20 bg-blue-500 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Blue 500</p>
-                <p class="text-gray-500 dark:text-gray-400">#3b82f6</p>
+              <div class="h-24 bg-accent-active rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Accent Active</p>
+                <p class="text-text-tertiary">--color-accent-active</p>
               </div>
             </div>
             <div class="flex flex-col">
-              <div class="h-20 bg-blue-600 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Blue 600</p>
-                <p class="text-gray-500 dark:text-gray-400">#2563eb</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-20 bg-blue-700 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Blue 700</p>
-                <p class="text-gray-500 dark:text-gray-400">#1d4ed8</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-20 bg-blue-800 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Blue 800</p>
-                <p class="text-gray-500 dark:text-gray-400">#1e40af</p>
-              </div>
-            </div>
-            <div class="flex flex-col">
-              <div class="h-20 bg-blue-900 rounded-t-lg shadow-sm"></div>
-              <div class="bg-white dark:bg-gray-800 p-2 text-center text-xs rounded-b-lg shadow">
-                <p class="font-medium text-gray-900 dark:text-white">Blue 900</p>
-                <p class="text-gray-500 dark:text-gray-400">#1e3a8a</p>
+              <div class="h-24 bg-accent-muted rounded-t-lg shadow-sm"></div>
+              <div class="bg-bg-secondary p-2 text-center text-xs rounded-b-lg shadow">
+                <p class="font-medium text-text-primary">Accent Muted</p>
+                <p class="text-text-tertiary">--color-accent-muted</p>
               </div>
             </div>
           </div>
@@ -409,112 +356,80 @@
         
         <!-- Feedback Colors -->
         <div class="mb-8">
-          <h3 class="text-lg font-medium mb-3 dark:text-white">Feedback Colors</h3>
+          <h3 class="text-lg font-medium mb-3 text-text-primary">Feedback Colors</h3>
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <!-- Success -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-              <h4 class="font-medium text-gray-900 dark:text-white mb-2">Success</h4>
-              <div class="grid grid-cols-5 gap-2">
+            <div class="bg-bg-secondary rounded-lg p-4 shadow">
+              <h4 class="font-medium text-text-primary mb-2">Success</h4>
+              <div class="grid grid-cols-3 gap-2">
                 <div class="flex flex-col">
-                  <div class="h-10 bg-green-100 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">100</div>
+                  <div class="h-12 bg-success rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Default</div>
                 </div>
                 <div class="flex flex-col">
-                  <div class="h-10 bg-green-300 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">300</div>
+                  <div class="h-12 bg-success-hover rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Hover</div>
                 </div>
                 <div class="flex flex-col">
-                  <div class="h-10 bg-green-500 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">500</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-10 bg-green-600 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">600</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-10 bg-green-800 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">800</div>
+                  <div class="h-12 bg-success-muted rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Muted</div>
                 </div>
               </div>
             </div>
             
             <!-- Warning -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-              <h4 class="font-medium text-gray-900 dark:text-white mb-2">Warning</h4>
-              <div class="grid grid-cols-5 gap-2">
+            <div class="bg-bg-secondary rounded-lg p-4 shadow">
+              <h4 class="font-medium text-text-primary mb-2">Warning</h4>
+              <div class="grid grid-cols-3 gap-2">
                 <div class="flex flex-col">
-                  <div class="h-10 bg-yellow-100 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">100</div>
+                  <div class="h-12 bg-warning rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Default</div>
                 </div>
                 <div class="flex flex-col">
-                  <div class="h-10 bg-yellow-300 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">300</div>
+                  <div class="h-12 bg-warning-hover rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Hover</div>
                 </div>
                 <div class="flex flex-col">
-                  <div class="h-10 bg-yellow-500 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">500</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-10 bg-yellow-600 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">600</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-10 bg-yellow-800 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">800</div>
+                  <div class="h-12 bg-warning-muted rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Muted</div>
                 </div>
               </div>
             </div>
             
             <!-- Error -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-              <h4 class="font-medium text-gray-900 dark:text-white mb-2">Error</h4>
-              <div class="grid grid-cols-5 gap-2">
+            <div class="bg-bg-secondary rounded-lg p-4 shadow">
+              <h4 class="font-medium text-text-primary mb-2">Error</h4>
+              <div class="grid grid-cols-3 gap-2">
                 <div class="flex flex-col">
-                  <div class="h-10 bg-red-100 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">100</div>
+                  <div class="h-12 bg-danger rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Default</div>
                 </div>
                 <div class="flex flex-col">
-                  <div class="h-10 bg-red-300 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">300</div>
+                  <div class="h-12 bg-danger-hover rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Hover</div>
                 </div>
                 <div class="flex flex-col">
-                  <div class="h-10 bg-red-500 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">500</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-10 bg-red-600 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">600</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-10 bg-red-800 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">800</div>
+                  <div class="h-12 bg-danger-muted rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Muted</div>
                 </div>
               </div>
             </div>
             
             <!-- Info -->
-            <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-              <h4 class="font-medium text-gray-900 dark:text-white mb-2">Info</h4>
-              <div class="grid grid-cols-5 gap-2">
+            <div class="bg-bg-secondary rounded-lg p-4 shadow">
+              <h4 class="font-medium text-text-primary mb-2">Info</h4>
+              <div class="grid grid-cols-3 gap-2">
                 <div class="flex flex-col">
-                  <div class="h-10 bg-blue-100 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">100</div>
+                  <div class="h-12 bg-info rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Default</div>
                 </div>
                 <div class="flex flex-col">
-                  <div class="h-10 bg-blue-300 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">300</div>
+                  <div class="h-12 bg-info-hover rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Hover</div>
                 </div>
                 <div class="flex flex-col">
-                  <div class="h-10 bg-blue-500 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">500</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-10 bg-blue-600 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">600</div>
-                </div>
-                <div class="flex flex-col">
-                  <div class="h-10 bg-blue-800 rounded-t-md"></div>
-                  <div class="text-center text-xs p-1 bg-gray-50 dark:bg-gray-700">800</div>
+                  <div class="h-12 bg-info-muted rounded-t-md"></div>
+                  <div class="text-center text-xs p-1 bg-bg-tertiary">Muted</div>
                 </div>
               </div>
             </div>
@@ -522,69 +437,85 @@
         </div>
       </div>
       
-      <!-- Semantic Colors -->
+      <!-- UI Colors -->
       <div class="mb-10">
-        <h2 class="text-xl font-semibold mb-4 dark:text-white">Semantic Colors</h2>
-        <p class="mb-6 text-gray-700 dark:text-gray-300">These colors change depending on the theme (light/dark) and provide meaningful abstractions for the UI.</p>
+        <h2 class="text-xl font-semibold mb-4 text-text-primary">UI Colors</h2>
+        <p class="mb-6 text-text-secondary">These colors provide the foundation for the UI elements and adapt to different themes.</p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Background Colors -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-            <h3 class="font-medium text-gray-900 dark:text-white mb-3">Background Colors</h3>
+          <div class="bg-bg-secondary rounded-lg p-4 shadow">
+            <h3 class="font-medium text-text-primary mb-3">Background Colors</h3>
             <div class="space-y-3">
               <div class="flex items-center">
-                <div class="w-16 h-16 bg-gray-50 dark:bg-gray-900 rounded-lg shadow-sm"></div>
+                <div class="w-16 h-16 bg-bg-primary rounded-lg shadow-sm"></div>
                 <div class="ml-4">
-                  <p class="font-medium text-gray-900 dark:text-white">Primary Background</p>
-                  <p class="text-gray-500 dark:text-gray-400 text-sm">--color-bg-primary</p>
+                  <p class="font-medium text-text-primary">Primary Background</p>
+                  <p class="text-text-tertiary text-sm">--color-bg-primary</p>
                 </div>
               </div>
               <div class="flex items-center">
-                <div class="w-16 h-16 bg-white dark:bg-gray-800 rounded-lg shadow-sm"></div>
+                <div class="w-16 h-16 bg-bg-secondary rounded-lg shadow-sm"></div>
                 <div class="ml-4">
-                  <p class="font-medium text-gray-900 dark:text-white">Secondary Background</p>
-                  <p class="text-gray-500 dark:text-gray-400 text-sm">--color-bg-secondary</p>
+                  <p class="font-medium text-text-primary">Secondary Background</p>
+                  <p class="text-text-tertiary text-sm">--color-bg-secondary</p>
                 </div>
               </div>
               <div class="flex items-center">
-                <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-lg shadow-sm"></div>
+                <div class="w-16 h-16 bg-bg-tertiary rounded-lg shadow-sm"></div>
                 <div class="ml-4">
-                  <p class="font-medium text-gray-900 dark:text-white">Tertiary Background</p>
-                  <p class="text-gray-500 dark:text-gray-400 text-sm">--color-bg-tertiary</p>
+                  <p class="font-medium text-text-primary">Tertiary Background</p>
+                  <p class="text-text-tertiary text-sm">--color-bg-tertiary</p>
+                </div>
+              </div>
+              <div class="flex items-center">
+                <div class="w-16 h-16 bg-bg-accent rounded-lg shadow-sm"></div>
+                <div class="ml-4">
+                  <p class="font-medium text-text-primary">Accent Background</p>
+                  <p class="text-text-tertiary text-sm">--color-bg-accent</p>
                 </div>
               </div>
             </div>
           </div>
           
           <!-- Text Colors -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-            <h3 class="font-medium text-gray-900 dark:text-white mb-3">Text Colors</h3>
+          <div class="bg-bg-secondary rounded-lg p-4 shadow">
+            <h3 class="font-medium text-text-primary mb-3">Text Colors</h3>
             <div class="space-y-3">
               <div class="flex items-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg">
-                  <span class="text-gray-900 dark:text-gray-50 font-bold">Aa</span>
+                <div class="w-16 h-16 flex items-center justify-center bg-bg-tertiary rounded-lg">
+                  <span class="text-text-primary font-bold">Aa</span>
                 </div>
                 <div class="ml-4">
-                  <p class="font-medium text-gray-900 dark:text-white">Primary Text</p>
-                  <p class="text-gray-500 dark:text-gray-400 text-sm">--color-text-primary</p>
+                  <p class="font-medium text-text-primary">Primary Text</p>
+                  <p class="text-text-tertiary text-sm">--color-text-primary</p>
                 </div>
               </div>
               <div class="flex items-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg">
-                  <span class="text-gray-700 dark:text-gray-300 font-bold">Aa</span>
+                <div class="w-16 h-16 flex items-center justify-center bg-bg-tertiary rounded-lg">
+                  <span class="text-text-secondary font-bold">Aa</span>
                 </div>
                 <div class="ml-4">
-                  <p class="font-medium text-gray-900 dark:text-white">Secondary Text</p>
-                  <p class="text-gray-500 dark:text-gray-400 text-sm">--color-text-secondary</p>
+                  <p class="font-medium text-text-primary">Secondary Text</p>
+                  <p class="text-text-tertiary text-sm">--color-text-secondary</p>
                 </div>
               </div>
               <div class="flex items-center">
-                <div class="w-16 h-16 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg">
-                  <span class="text-gray-500 dark:text-gray-400 font-bold">Aa</span>
+                <div class="w-16 h-16 flex items-center justify-center bg-bg-tertiary rounded-lg">
+                  <span class="text-text-tertiary font-bold">Aa</span>
                 </div>
                 <div class="ml-4">
-                  <p class="font-medium text-gray-900 dark:text-white">Tertiary Text</p>
-                  <p class="text-gray-500 dark:text-gray-400 text-sm">--color-text-tertiary</p>
+                  <p class="font-medium text-text-primary">Tertiary Text</p>
+                  <p class="text-text-tertiary text-sm">--color-text-tertiary</p>
+                </div>
+              </div>
+              <div class="flex items-center">
+                <div class="w-16 h-16 flex items-center justify-center bg-bg-tertiary rounded-lg">
+                  <span class="text-text-accent font-bold">Aa</span>
+                </div>
+                <div class="ml-4">
+                  <p class="font-medium text-text-primary">Accent Text</p>
+                  <p class="text-text-tertiary text-sm">--color-text-accent</p>
                 </div>
               </div>
             </div>
@@ -594,29 +525,29 @@
       
       <!-- Component Tokens -->
       <div>
-        <h2 class="text-xl font-semibold mb-4 dark:text-white">Component Tokens</h2>
-        <p class="mb-6 text-gray-700 dark:text-gray-300">These tokens are used for specific UI components throughout the application.</p>
+        <h2 class="text-xl font-semibold mb-4 text-text-primary">Component Tokens</h2>
+        <p class="mb-6 text-text-secondary">These tokens are used for specific UI components throughout the application.</p>
         
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Button Examples -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-            <h3 class="font-medium text-gray-900 dark:text-white mb-3">Button Colors</h3>
+          <div class="bg-bg-secondary rounded-lg p-4 shadow">
+            <h3 class="font-medium text-text-primary mb-3">Button Colors</h3>
             <div class="space-y-4">
               <div>
-                <p class="font-medium text-gray-900 dark:text-white mb-2">Primary Button</p>
-                <button class="px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-md hover:bg-blue-700 dark:hover:bg-blue-400 transition-colors">
+                <p class="font-medium text-text-primary mb-2">Primary Button</p>
+                <button class="px-4 py-2 bg-primary text-text-on-primary rounded-md hover:bg-primary-hover active:bg-primary-active transition-colors">
                   Primary Button
                 </button>
               </div>
               <div>
-                <p class="font-medium text-gray-900 dark:text-white mb-2">Secondary Button</p>
-                <button class="px-4 py-2 border border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-500 rounded-md hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors">
+                <p class="font-medium text-text-primary mb-2">Secondary Button</p>
+                <button class="px-4 py-2 border border-primary bg-transparent text-primary rounded-md hover:bg-primary-muted hover:text-primary-hover active:text-primary-active transition-colors">
                   Secondary Button
                 </button>
               </div>
               <div>
-                <p class="font-medium text-gray-900 dark:text-white mb-2">Tertiary Button</p>
-                <button class="px-4 py-2 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <p class="font-medium text-text-primary mb-2">Tertiary Button</p>
+                <button class="px-4 py-2 bg-transparent text-text-secondary rounded-md hover:bg-bg-tertiary hover:text-text-primary transition-colors">
                   Tertiary Button
                 </button>
               </div>
@@ -624,24 +555,60 @@
           </div>
           
           <!-- Feedback Components -->
-          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 shadow">
-            <h3 class="font-medium text-gray-900 dark:text-white mb-3">Feedback Components</h3>
+          <div class="bg-bg-secondary rounded-lg p-4 shadow">
+            <h3 class="font-medium text-text-primary mb-3">Feedback Components</h3>
             <div class="space-y-4">
-              <div class="p-3 bg-blue-50 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-md border border-blue-500 dark:border-blue-600">
+              <div class="p-3 bg-info-muted text-info rounded-md border border-info">
                 <p class="font-medium">Info Alert</p>
                 <p class="text-sm">This is an informational message.</p>
               </div>
-              <div class="p-3 bg-green-50 dark:bg-green-900 text-green-600 dark:text-green-300 rounded-md border border-green-500 dark:border-green-600">
+              <div class="p-3 bg-success-muted text-success rounded-md border border-success">
                 <p class="font-medium">Success Alert</p>
                 <p class="text-sm">Operation completed successfully.</p>
               </div>
-              <div class="p-3 bg-yellow-50 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-300 rounded-md border border-yellow-500 dark:border-yellow-600">
+              <div class="p-3 bg-warning-muted text-warning rounded-md border border-warning">
                 <p class="font-medium">Warning Alert</p>
                 <p class="text-sm">Proceed with caution.</p>
               </div>
-              <div class="p-3 bg-red-50 dark:bg-red-900 text-red-600 dark:text-red-300 rounded-md border border-red-500 dark:border-red-600">
+              <div class="p-3 bg-danger-muted text-danger rounded-md border border-danger">
                 <p class="font-medium">Error Alert</p>
                 <p class="text-sm">Something went wrong.</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Border & Shadow -->
+          <div class="bg-bg-secondary rounded-lg p-4 shadow">
+            <h3 class="font-medium text-text-primary mb-3">Borders</h3>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <div class="p-3 border border-border bg-bg-secondary rounded w-24 h-16 text-center">Default</div>
+                <div class="p-3 border border-border-hover bg-bg-secondary rounded w-24 h-16 text-center">Hover</div>
+                <div class="p-3 border border-border-focus bg-bg-secondary rounded w-24 h-16 text-center">Focus</div>
+                <div class="p-3 border border-divider bg-bg-secondary rounded w-24 h-16 text-center">Divider</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Card Examples -->
+          <div class="bg-bg-secondary rounded-lg p-4 shadow">
+            <h3 class="font-medium text-text-primary mb-3">Card Examples</h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="p-3 border border-border bg-bg-secondary rounded shadow">
+                <h4 class="font-medium text-text-primary mb-1">Default Card</h4>
+                <p class="text-text-secondary text-xs">Uses background & border tokens</p>
+              </div>
+              <div class="p-3 border border-primary-muted bg-primary-muted rounded shadow">
+                <h4 class="font-medium text-primary mb-1">Primary Card</h4>
+                <p class="text-text-secondary text-xs">Uses primary tokens</p>
+              </div>
+              <div class="p-3 border border-secondary-muted bg-secondary-muted rounded shadow">
+                <h4 class="font-medium text-secondary mb-1">Secondary Card</h4>
+                <p class="text-text-secondary text-xs">Uses secondary tokens</p>
+              </div>
+              <div class="p-3 border border-accent-muted bg-accent-muted rounded shadow">
+                <h4 class="font-medium text-accent mb-1">Accent Card</h4>
+                <p class="text-text-secondary text-xs">Uses accent tokens</p>
               </div>
             </div>
           </div>
