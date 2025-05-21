@@ -10,11 +10,19 @@
 <body x-data="{ sidebarOpen: true, sidebarCollapsed: false }">
 
   <!-- Sidebar -->
-  <aside id="default-sidebar" class="fixed top-0 left-0 z-40 h-screen overflow-y-auto py-5 px-3 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform -translate-x-full sm:translate-x-0" :class="sidebarCollapsed ? 'w-[54px]' : 'w-64'" aria-label="Sidenav">
-    <ul class="space-y-2">
+  <aside id="default-sidebar" class="fixed top-0 left-0 z-40 h-screen overflow-y-auto pt-4 pb-5 px-3 bg-white border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 transition-transform -translate-x-full sm:translate-x-0" :class="sidebarCollapsed ? 'w-[53px]' : 'w-64'" aria-label="Sidenav">
+    <!-- Logo Section -->
+    <div class="h-[60px] flex items-center space-x-2 justify-start px-3 pt-2.5 transition-all duration-300" style="border-bottom: 1px solid; border-color: inherit;">
+      <a href="/">
+        <img :class="sidebarCollapsed ? 'h-6.5 w-6.5' : 'h-9 w-9'" class="transition-all duration-300" src="/src/assets/images/gradelib_e.png" alt="GradeLib Logo">
+      </a>
+      <span x-show="!sidebarCollapsed" class="font-bold text-lg text-gray-900 dark:text-white">GradeLib</span>
+    </div>
+
+    <ul class="space-y-2 mt-4">
       <!-- Pages Section -->
       <li x-data="{ open: false }">
-        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
           <span x-html="$icon('document','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Pages</span>
           <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -31,7 +39,7 @@
       </li>
       <!-- Forms Section -->
       <li x-data="{ open: false }">
-        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
           <span x-html="$icon('clipboard','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Forms</span>
           <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -47,7 +55,7 @@
       </li>
       <!-- Tables Section -->
       <li x-data="{ open: false }">
-        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
           <span x-html="$icon('table','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Tables</span>
           <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -62,7 +70,7 @@
       </li>
       <!-- Charts Section -->
       <li x-data="{ open: false }">
-        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
           <span x-html="$icon('chartBar','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Charts</span>
           <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -77,7 +85,7 @@
       </li>
       <!-- Calendar Section -->
       <li x-data="{ open: false }">
-        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+        <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
           <span x-html="$icon('calendar','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Calendar</span>
           <svg :class="{'transform rotate-180': open}" class="w-6 h-6 transition-transform" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -94,7 +102,7 @@
   </aside>
 
   <!-- Main content wrapper -->
-  <div class="min-h-screen transition-all duration-300 bg-gray-50 dark:!bg-gray-900 main-bg" :class="sidebarCollapsed ? 'lg:ml-[54px]' : 'lg:ml-64'">
+  <div class="min-h-screen transition-all duration-300 bg-gray-50 dark:!bg-gray-900 main-bg" :class="sidebarCollapsed ? 'lg:ml-[53px]' : 'lg:ml-64'">
     <!-- Main content -->
     <div class="p-4">
     <!-- Navbar -->
