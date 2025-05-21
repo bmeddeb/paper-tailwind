@@ -88,6 +88,12 @@ module.exports = {
           hover: 'var(--color-sidebar-hover)',
           border:'var(--color-sidebar-border)',
         },
+        card: {
+          bg: 'var(--color-card-bg)',
+          border: 'var(--color-card-border)', 
+          title: 'var(--color-card-title)',
+          text: 'var(--color-card-text)',
+        },
       },
 
       // Spacing system

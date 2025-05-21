@@ -25,6 +25,7 @@
   <link rel="apple-touch-icon" href="/src/assets/images/apple-touch-icon.png">
   <link rel="stylesheet" href="/dist/style.css">
   <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
 </head>
 <body>
 
@@ -628,6 +629,131 @@
       </div>
     </div>
 
+    <!-- Three Cards in One Row Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
+      <!-- Card 1: Lorem Ipsum -->
+      <div class="bg-card-bg rounded-lg shadow-md border border-card-border overflow-hidden flex flex-col h-full">
+        <div class="px-6 py-4 border-b border-card-border">
+          <h3 class="text-lg font-semibold text-card-title">Lorem Ipsum</h3>
+        </div>
+        <div class="p-6 flex-grow overflow-auto">
+          <p class="text-text-primary mb-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris.</p>
+          <p class="text-text-secondary mb-3">Fusce varius, dolor tempor interdum tristique, dui urna bibendum magna, ut ullamcorper purus dui vitae nibh. Suspendisse non eros ut erat facilisis maximus.</p>
+          <p class="text-text-tertiary">Morbi viverra dignissim lectus, a semper massa. Integer vitae lobortis ipsum, ut tristique sem. Mauris sollicitudin, turpis in hendrerit sodales, lectus ipsum pellentesque ligula, sit amet scelerisque urna nibh ut magna.</p>
+        </div>
+        <div class="px-6 py-3 bg-bg-tertiary border-t border-card-border text-sm text-text-tertiary mt-auto">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-medium">Word count: 75</span>
+            <button class="text-primary hover:text-primary-hover text-xs font-medium">Generate more</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Fun Facts -->
+      <div class="bg-card-bg rounded-lg shadow-md border border-card-border overflow-hidden flex flex-col h-full">
+        <div class="px-6 py-4 border-b border-card-border">
+          <div class="flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-card-title">Developer Humor</h3>
+            <span x-html="$icon('chartPie', 'w-5 h-5 text-primary')" class="ml-2"></span>
+          </div>
+        </div>
+        <div class="p-6 flex-grow">
+          <div class="flex items-center mb-6">
+            <div class="p-3 rounded-full bg-primary-muted text-primary mr-4">
+              <span x-html="$icon('chartBar', 'w-6 h-6')"></span>
+            </div>
+            <div>
+              <h4 class="text-text-primary font-medium mb-1">Why do programmers prefer dark mode?</h4>
+              <p class="text-text-secondary">Because light attracts bugs! 🪲</p>
+            </div>
+          </div>
+          <div class="flex items-center mb-6">
+            <div class="p-3 rounded-full bg-info-muted text-info mr-4">
+              <span x-html="$icon('document', 'w-6 h-6')"></span>
+            </div>
+            <div>
+              <h4 class="text-text-primary font-medium mb-1">Documentation Process</h4>
+              <p class="text-text-secondary">I'll document it later = I'll never document it 📝</p>
+            </div>
+          </div>
+          <div class="flex items-center">
+            <div class="p-3 rounded-full bg-warning-muted text-warning mr-4">
+              <span x-html="$icon('exclamationCircle', 'w-6 h-6')"></span>
+            </div>
+            <div>
+              <h4 class="text-text-primary font-medium mb-1">Git Workflow</h4>
+              <p class="text-text-secondary">git commit -m "Fix bugs"<br>git push<br>git pray 🙏</p>
+            </div>
+          </div>
+        </div>
+        <div class="px-6 py-3 bg-bg-tertiary border-t border-card-border text-sm text-text-tertiary mt-auto">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-medium">Powered by Dad Jokes API</span>
+            <button class="text-primary hover:text-primary-hover text-xs font-medium">Get another joke</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Flowbite Carousel -->
+      <div class="bg-card-bg rounded-lg shadow-md border border-card-border overflow-hidden flex flex-col h-full">
+        <div class="px-6 py-4 border-b border-card-border">
+          <div class="flex justify-between items-center">
+            <h3 class="text-lg font-semibold text-card-title">Nature Photography</h3>
+            <span x-html="$icon('eye', 'w-5 h-5 text-primary')" class="ml-2"></span>
+          </div>
+        </div>
+        <div class="p-6 flex-grow">
+          <!-- Carousel wrapper -->
+          <div id="image-carousel" class="relative w-full" data-carousel="slide">
+            <!-- Carousel indicators -->
+            <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
+              <button type="button" class="w-3 h-3 rounded-full bg-white dark:bg-gray-800" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+              <button type="button" class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+              <button type="button" class="w-3 h-3 rounded-full bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+            </div>
+            <!-- Carousel items -->
+            <div class="relative h-56 overflow-hidden rounded-lg">
+              <!-- Item 1 - Mountain Landscape -->
+              <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&auto=format&fit=crop&q=60" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Mountain landscape with pine trees and fog">
+              </div>
+              <!-- Item 2 - Ocean Sunset -->
+              <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=500&auto=format&fit=crop&q=60" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Beautiful ocean waves at sunset">
+              </div>
+              <!-- Item 3 - Tropical Beach -->
+              <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img src="https://images.unsplash.com/photo-1506953823976-52e1fdc0149a?w=500&auto=format&fit=crop&q=60" class="absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="Beautiful tropical beach with palm trees">
+              </div>
+            </div>
+            <!-- Carousel controls -->
+            <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                </svg>
+                <span class="sr-only">Previous</span>
+              </span>
+            </button>
+            <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                </svg>
+                <span class="sr-only">Next</span>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="px-6 py-3 bg-bg-tertiary border-t border-card-border text-sm text-text-tertiary mt-auto">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-medium">Photos from Unsplash</span>
+            <button class="text-primary hover:text-primary-hover text-xs font-medium">View all photos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Recent Activity -->
     <div class="bg-card-bg rounded-lg shadow-md border border-card-border overflow-hidden">
       <div class="px-6 py-4 border-b border-card-border">
@@ -1021,6 +1147,8 @@
         }
       }).render();
 
+      // The carousel is initialized automatically by Flowbite
+      
       // End of the setTimeout callback
       }, 500);
     });
