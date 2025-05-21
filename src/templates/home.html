@@ -21,7 +21,7 @@
 
     <ul class="space-y-2 mt-4">
       <!-- Pages Section -->
-      <li x-data="{ open: false }">
+      <li x-data="{ open: false }" x-init="$watch('sidebarCollapsed', value => { if (value) open = false })">
         <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
           <span x-html="$icon('document','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Pages</span>
@@ -38,7 +38,7 @@
         </ul>
       </li>
       <!-- Forms Section -->
-      <li x-data="{ open: false }">
+      <li x-data="{ open: false }" x-init="$watch('sidebarCollapsed', value => { if (value) open = false })">
         <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
           <span x-html="$icon('clipboard','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Forms</span>
@@ -54,7 +54,7 @@
         </ul>
       </li>
       <!-- Tables Section -->
-      <li x-data="{ open: false }">
+      <li x-data="{ open: false }" x-init="$watch('sidebarCollapsed', value => { if (value) open = false })">
         <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
           <span x-html="$icon('table','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Tables</span>
@@ -69,7 +69,7 @@
         </ul>
       </li>
       <!-- Charts Section -->
-      <li x-data="{ open: false }">
+      <li x-data="{ open: false }" x-init="$watch('sidebarCollapsed', value => { if (value) open = false })">
         <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
           <span x-html="$icon('chartBar','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Charts</span>
@@ -84,7 +84,7 @@
         </ul>
       </li>
       <!-- Calendar Section -->
-      <li x-data="{ open: false }">
+      <li x-data="{ open: false }" x-init="$watch('sidebarCollapsed', value => { if (value) open = false })">
         <button @click="if(sidebarCollapsed){sidebarCollapsed=false; open=true}else{open=!open}" type="button" class="flex items-center w-full pl-1 pr-2 py-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
           <span x-html="$icon('calendar','w-6 h-6 text-gray-400 transition duration-75 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white')"></span>
           <span class="flex-1 ml-3 text-left whitespace-nowrap">Calendar</span>
