@@ -79,7 +79,14 @@
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
         </button>
-        <ul id="pages-submenu" x-show="open" x-cloak class="py-2 space-y-2">
+        <ul id="pages-submenu" x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 transform -translate-y-2"
+           x-transition:enter-end="opacity-100 transform translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 transform translate-y-0"
+           x-transition:leave-end="opacity-0 transform -translate-y-2"
+           x-cloak class="py-2 space-y-2">
           <li><a href="/src/templates/timeline.html" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Timeline</a></li>
           <li><a href="/src/templates/table.html" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Tables</a></li>
           <li><a href="/src/templates/login.html" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Login</a></li>
@@ -101,7 +108,14 @@
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
         </button>
-        <ul id="forms-submenu" x-show="open" x-cloak class="py-2 space-y-2">
+        <ul id="forms-submenu" x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 transform -translate-y-2"
+           x-transition:enter-end="opacity-100 transform translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 transform translate-y-0"
+           x-transition:leave-end="opacity-0 transform -translate-y-2"
+           x-cloak class="py-2 space-y-2">
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Input Fields</a></li>
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Select</a></li>
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Checkbox</a></li>
@@ -122,7 +136,14 @@
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
         </button>
-        <ul id="tables-submenu" x-show="open" x-cloak class="py-2 space-y-2">
+        <ul id="tables-submenu" x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 transform -translate-y-2"
+           x-transition:enter-end="opacity-100 transform translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 transform translate-y-0"
+           x-transition:leave-end="opacity-0 transform -translate-y-2"
+           x-cloak class="py-2 space-y-2">
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Basic Table</a></li>
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Sortable Table</a></li>
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Data Table</a></li>
@@ -142,7 +163,14 @@
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
         </button>
-        <ul id="charts-submenu" x-show="open" x-cloak class="py-2 space-y-2">
+        <ul id="charts-submenu" x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 transform -translate-y-2"
+           x-transition:enter-end="opacity-100 transform translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 transform translate-y-0"
+           x-transition:leave-end="opacity-0 transform -translate-y-2"
+           x-cloak class="py-2 space-y-2">
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Line Chart</a></li>
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Bar Chart</a></li>
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Pie Chart</a></li>
@@ -162,7 +190,14 @@
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
           </svg>
         </button>
-        <ul id="calendar-submenu" x-show="open" x-cloak class="py-2 space-y-2">
+        <ul id="calendar-submenu" x-show="open" 
+           x-transition:enter="transition ease-out duration-200"
+           x-transition:enter-start="opacity-0 transform -translate-y-2"
+           x-transition:enter-end="opacity-100 transform translate-y-0"
+           x-transition:leave="transition ease-in duration-150"
+           x-transition:leave-start="opacity-100 transform translate-y-0"
+           x-transition:leave-end="opacity-0 transform -translate-y-2"
+           x-cloak class="py-2 space-y-2">
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Monthly</a></li>
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Weekly</a></li>
           <li><a href="#" class="flex items-center p-2 pl-11 text-sidebar-text rounded-lg hover:bg-sidebar-item-hover">Daily</a></li>
@@ -231,12 +266,12 @@
           <nav x-show="open" 
                @click.away="close()" 
                @click.outside="close()"
-               x-transition:enter="transition ease-out duration-100"
-               x-transition:enter-start="transform opacity-0 scale-95"
-               x-transition:enter-end="transform opacity-100 scale-100"
-               x-transition:leave="transition ease-in duration-75"
-               x-transition:leave-start="transform opacity-100 scale-100"
-               x-transition:leave-end="transform opacity-0 scale-95"
+               x-transition:enter="transition ease-out duration-200"
+               x-transition:enter-start="opacity-0 transform -translate-y-2"
+               x-transition:enter-end="opacity-100 transform translate-y-0"
+               x-transition:leave="transition ease-in duration-150"
+               x-transition:leave-start="opacity-100 transform translate-y-0"
+               x-transition:leave-end="opacity-0 transform -translate-y-2"
                class="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-md bg-bg-secondary py-1 shadow-md border border-border focus:outline-none" 
                aria-label="Notifications menu" 
                role="menu" 
@@ -317,12 +352,12 @@
             <div x-show="open" 
                  @click.away="close()"
                  @click.outside="close()" 
-                 x-transition:enter="transition ease-out duration-100"
-                 x-transition:enter-start="transform opacity-0 scale-95"
-                 x-transition:enter-end="transform opacity-100 scale-100"
-                 x-transition:leave="transition ease-in duration-75"
-                 x-transition:leave-start="transform opacity-100 scale-100"
-                 x-transition:leave-end="transform opacity-0 scale-95"
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 transform -translate-y-2"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-2"
                  class="absolute right-0 z-10 mt-1 w-40 bg-bg-secondary rounded-md shadow-md border border-border"
                  aria-labelledby="theme-selector-button">
               <ul class="py-1 text-sm text-text-secondary" role="menu">
@@ -360,12 +395,12 @@
           <nav x-show="open" 
                @click.away="close()"
                @click.outside="close()" 
-               x-transition:enter="transition ease-out duration-100"
-               x-transition:enter-start="transform opacity-0 scale-95"
-               x-transition:enter-end="transform opacity-100 scale-100"
-               x-transition:leave="transition ease-in duration-75"
-               x-transition:leave-start="transform opacity-100 scale-100"
-               x-transition:leave-end="transform opacity-0 scale-95"
+               x-transition:enter="transition ease-out duration-200"
+               x-transition:enter-start="opacity-0 transform -translate-y-2"
+               x-transition:enter-end="opacity-100 transform translate-y-0"
+               x-transition:leave="transition ease-in duration-150"
+               x-transition:leave-start="opacity-100 transform translate-y-0"
+               x-transition:leave-end="opacity-0 transform -translate-y-2"
                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-bg-secondary py-1 shadow-md border border-border focus:outline-none" 
                aria-label="User menu" 
                role="menu" 
@@ -459,6 +494,12 @@
        }"
        x-show="visible"
        @click="hide()"
+       x-transition:enter="transition ease-out duration-200"
+       x-transition:enter-start="opacity-0 transform translate-y-2"
+       x-transition:enter-end="opacity-100 transform translate-y-0"
+       x-transition:leave="transition ease-in duration-150"
+       x-transition:leave-start="opacity-100 transform translate-y-0"
+       x-transition:leave-end="opacity-0 transform translate-y-2"
        class="fixed bottom-4 right-4 z-50 flex items-center p-4 max-w-xs border rounded-lg shadow-md transition-all duration-300 ease-in-out"
        :class="{
          'text-text-tertiary bg-bg-secondary border-border': type === 'info',
